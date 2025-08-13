@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import desktopAuth from "../../../public/images/auth/finance-login.png";
 import Logo from "../../../public/images/Logo.png";
 import { Link } from "react-router-dom";
+import eyeIcon from "../../../public/images/auth/eye-icon.png";
 
 interface FormData {
   name: string;
@@ -17,12 +18,21 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(true);
 
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleShowPassword = () => {
+    if (showPassword === true) {
+      setShowPassword(false);
+    } else {
+      setShowPassword(true)
+    }
   };
 
   const validate = () => {
@@ -59,7 +69,7 @@ const SignUp = () => {
 
     if (!validate()) return;
 
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   return (
@@ -89,7 +99,7 @@ const SignUp = () => {
             onSubmit={handleSubmit}
             className="w-[100%] lg:w-[60%] space-y-4 p-6 rounded"
           >
-              <h2 className="text-xl font-bold">Login</h2>
+            <h2 className="text-xl font-bold">Login</h2>
             <div>
               <label className="block font-semibold">Email</label>
               <input
@@ -104,13 +114,22 @@ const SignUp = () => {
             </div>
             <div>
               <label className="block font-semibold">Password</label>
-              <input
-                className={inputStyling}
-                type="password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-              />
+
+              <div className="flex items-center justify-between pr-5 w-full border border-gray-300 rounded">
+                <input
+                  className={`w-[85%] border-none outline-none p-2 `}
+                  type={`${showPassword ? "password": "text"}`}
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                />
+                  <img
+                    src={eyeIcon}
+                    alt="an eye icon"
+                    className="cursor-pointer w-[16px] h-[16px]"
+                    onClick={handleShowPassword}
+                  />
+              </div>
               {errors.password && (
                 <p className="text-red-500 text-sm">{errors.password}</p>
               )}

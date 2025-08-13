@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import desktopAuth from "../../../public/images/auth/finance-login.png";
 import Logo from "../../../public/images/Logo.png";
 import { Link } from "react-router-dom";
+import eyeIcon from "../../../public/images/auth/eye-icon.png";
 
 interface FormData {
   name: string;
@@ -9,8 +10,7 @@ interface FormData {
   password: string;
 }
 
-const inputStyling =
-  "w-full border border-gray-300 outline-none p-2 rounded";
+const inputStyling = "w-full border border-gray-300 outline-none p-2 rounded";
 
 const SignUp = () => {
   const [form, setForm] = useState<FormData>({
@@ -18,12 +18,21 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(true);
 
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleShowPassword = () => {
+    if (showPassword === true) {
+      setShowPassword(false);
+    } else {
+      setShowPassword(true)
+    }
   };
 
   const validate = () => {
@@ -90,7 +99,7 @@ const SignUp = () => {
             onSubmit={handleSubmit}
             className="w-[100%] lg:w-[60%] space-y-4 p-6 rounded"
           >
-              <h2 className="text-xl font-bold">Sign Up</h2>
+            <h2 className="text-xl font-bold">Sign Up</h2>
             <div>
               <label className="block font-semibold">Name</label>
               <input
@@ -115,27 +124,36 @@ const SignUp = () => {
             </div>
             <div>
               <label className="block font-semibold">Password</label>
-              <input
-                className={inputStyling}
-                type="password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-              />
-              <GiE
+
+              <div className="flex items-center justify-between pr-5 w-full border border-gray-300 rounded">
+                <input
+                  className={`w-[85%] border-none outline-none p-2 `}
+                  type={`${showPassword ? "password": "text"}`}
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                />
+                  <img
+                    src={eyeIcon}
+                    alt="an eye icon"
+                    className="cursor-pointer w-[16px] h-[16px]"
+                    onClick={handleShowPassword}
+                  />
+              </div>
               {errors.password && (
                 <p className="text-red-500 text-sm">{errors.password}</p>
               )}
             </div>
             <div className="flex flex-col items-center gap-2">
-              <button
-                className="text-[12px] text-white bg-gray-900 cursor-pointer px-4 py-3 rounded w-full text-center"
-              >
+              <button className="text-[12px] text-white bg-gray-900 cursor-pointer px-4 py-3 rounded w-full text-center">
                 Create Account
               </button>
-              <p className="text-gray-500">Already have an account? 
+              <p className="text-gray-500">
+                Already have an account?
                 <span>
-                  <Link to="/login" className="text-gray-900 underline">Login</Link>
+                  <Link to="/login" className="text-gray-900 underline">
+                    Login
+                  </Link>
                 </span>
               </p>
             </div>
