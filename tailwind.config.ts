@@ -10,6 +10,9 @@ const config: Config = {
       fontFamily: {
         dmsans: ['"DM Sans"', "sans-serif"],  // font name exactly as Google Fonts
       },
+      colors: {
+        cardStyling: 'rgb(32,31,36)',
+      }
     },
   },
   plugins: [],

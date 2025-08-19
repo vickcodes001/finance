@@ -1,4 +1,3 @@
-import { MdOutlineBatteryChargingFull } from "react-icons/md";
 import { Link } from "react-router-dom";
 import type { details } from "./type";
 import Card from "./Cards";
@@ -35,10 +34,10 @@ const PotsCard = ({ detail }: Props) => {
 
   return (
     <>
-      <Card size="lg" layout="screen" responsiveness="sm">
+      <Card size="lg" layout="screen">
         {potDetails.map((pot, index) => (
           <div className="flex justify-between" key={index}>
-            <h3 className="font-semibold">{pot.potTitle}</h3>
+            <h3 className="font-bold text-xl">{pot.potTitle}</h3>
             <Link to="/pots" className="flex items-center gap-2 text-gray-500">
               <p className="text-[12px]">{pot.potDescription}</p>
               <p>{pot.potIcon}</p>
@@ -47,8 +46,8 @@ const PotsCard = ({ detail }: Props) => {
         ))}
 
         <div className="flex flex-col lg:flex-row gap-5">
-          <div className="flex gap-2 bg-[#10B981] p-5 rounded-md items-center lg:w-1/2">
-            <MdOutlineBatteryChargingFull className="text-3xl" />
+          <div className="flex gap-5 bg-[#f2e8dd] p-5 rounded-md items-center lg:w-1/2">
+            <img src="images/card-pot-icon.svg" alt="" />
             <div>
               <p className="text-[12px] text-gray-500">Total Saved</p>
               <p className="text-3xl font-bold">${totalAmount}</p>

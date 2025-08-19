@@ -69,11 +69,11 @@ const TransactionCard = ({ detail }: Props) => {
 
   return (
     <>
-      <Card size="lg" responsiveness="sm" layout="screen">
+      <Card size="lg" layout="screen">
         {transactionDetail.map((transaction, index) => (
           <div key={index}>
             <div className="flex justify-between" key={index}>
-              <h3 className="font-semibold">{transaction.transactionTitle}</h3>
+              <h3 className="font-bold text-xl">{transaction.transactionTitle}</h3>
               <Link
                 to="/transaction"
                 className="flex items-center justify-end gap-2 text-gray-500"

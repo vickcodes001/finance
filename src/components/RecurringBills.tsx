@@ -27,12 +27,12 @@ const RecurringBills = ({ detail }: Props) => {
   );
   return (
     <>
-      <Card size="md" layout="screen" responsiveness="sm">
+      <Card size="md" layout="screen">
         <div>
           {RecurringBillDetail.map((billDetail, index) => (
             <div key={index}>
               <div className="flex justify-between" key={index}>
-                <h3 className="font-semibold">{billDetail.billTitle}</h3>
+                <h3 className="font-bold text-xl">{billDetail.billTitle}</h3>
                 <Link
                   to="/bills"
                   className="flex items-center justify-end gap-2 text-gray-500"
@@ -48,7 +48,7 @@ const RecurringBills = ({ detail }: Props) => {
           {RecurringBill.map((bill, index) => (
             <div
               key={index}
-              className={`flex justify-between bg-[#22D3EE] p-2 rounded-md ${
+              className={`flex justify-between bg-[#f2e8dd] p-2 rounded-md ${
                 bill.title === "Paid Bills"
                   ? "border-3 border-transparent border-l-green-700"
                   : bill.title === "Total Upcoming"

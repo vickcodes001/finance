@@ -3,30 +3,26 @@ import { cva } from "class-variance-authority";
 interface cardProps {
   size:"lg" | "md" | "sm"
   layout: "screen"
-  responsiveness: "sm"
   children : React.ReactNode
 }
 
-const cards = cva(" text-[#F1F5F9]", {
+const cards = cva(" text-gray-900", {
   variants: {
     size: {
       lg: "flex flex-col gap-7 xl:text-size-lg md:text-size-md text-sm max-w-[600px]",
       md: "flex flex-col gap-7 xl:text-size-md md:text-size-sm max-w-[400px]",
-      sm: "flex flex-col gap-7 xl:text-size-sm md:text-size-xs w-full lg:max-w-[100px]",
+      sm: "flex flex-col gap-3 xl:text-size-sm md:text-size-xs w-full lg:max-w-[400px] h-25",
     },
     layout: {
-      screen: "p-5 bg-[#1E293B] rounded-xl",
+      screen: "p-5 bg-white rounded-xl",
     },
-    responsiveness: {
-      sm: ""
-    }
   },
   compoundVariants: [],
 });
 
-const Card = ({children, size, layout, responsiveness}: cardProps) => {
+const Card = ({children, size, layout}: cardProps) => {
     return (
-        <div className={cards({size, layout, responsiveness})}>
+        <div className={cards({size, layout})}>
             {children}
         </div>
     )

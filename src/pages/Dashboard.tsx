@@ -12,13 +12,12 @@ interface Props {
 
 const Dashboard = ({ detail }: Props) => {
   return (
-    <div className="flex flex-col-reverse lg:flex-row w-full relative">
-      <div className="hidden lg:block lg:w-[25%] rounded-t-2xl h-[100vh]"></div>
+    <div className="flex flex-col-reverse lg:flex-row w-full relative bg-[#f2e8dd]">
       <Sidebar />
 
       <div className="flex flex-col gap-5 py-5 px-5 lg:px-10 lg:w-full lg:max-w-[100%]">
         <Overview />
-        <div className="flex flex-col lg:flex-row lg:w-full lg:max-w-[100%] gap-5">
+        <div className="flex flex-col lg:flex-row lg:w-full lg:max-w-[1000px] gap-5">
           <div className="flex flex-col lg:w-[60%] gap-5">
             <PotsCard detail={detail} />
             <TransactionCard detail={detail} />

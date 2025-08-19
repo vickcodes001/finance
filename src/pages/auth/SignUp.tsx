@@ -145,7 +145,7 @@ const SignUp = () => {
               )}
             </div>
             <div className="flex flex-col items-center gap-2">
-              <button className="text-[12px] text-white bg-gray-900 cursor-pointer px-4 py-3 rounded w-full text-center">
+              <button className="text-[12px] text-white bg-[rgba(32,31,36,1)] cursor-pointer px-4 py-3 rounded w-full text-center">
                 Create Account
               </button>
               <p className="text-gray-500">

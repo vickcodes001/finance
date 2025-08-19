@@ -83,7 +83,7 @@ const Chart = ({ entertainment, bill, dinning, max }: CircularProgressProps) => 
         />
       </svg>
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-900">
         <h2 className="text-2xl font-bold">
           ${(entertainment + bill + dinning).toFixed(2)}
         </h2>

@@ -26,7 +26,8 @@ const Budgets = [
   },
 ];
 
-const chart = Budgets.reduce((sum, item) => sum + item.amount, 0 )
+// calculating the amount of the chart to affect the chart
+// const chart = Budgets.reduce((sum, item) => sum + item.amount, 0 )
 
 const BudgetsCard = ({ detail }: Props) => {
   const budgetsDetail = detail.filter(
@@ -35,12 +36,12 @@ const BudgetsCard = ({ detail }: Props) => {
 
   return (
     <>
-      <Card size="md" layout="screen" responsiveness="sm">
+      <Card size="md" layout="screen">
         <div>
           {budgetsDetail.map((budget, index) => (
             <div key={index}>
               <div className="flex justify-between" key={index}>
-                <h3 className="font-semibold">{budget.budgetTitle}</h3>
+                <h3 className="font-bold text-xl">{budget.budgetTitle}</h3>
                 <Link
                   to="/budgets"
                   className="flex items-center justify-end gap-2 text-gray-500"
