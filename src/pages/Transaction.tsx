@@ -96,9 +96,6 @@ const Transactions = () => {
                     <MdArrowDropUp className="hidden" />
                   </div>
                 </div>
-                <button className="py-1 px-2 rounded-br-xl text-[10px] text-white bg-[#1E293B] cursor-pointer">
-                  Upload Receipt
-                </button>
               </div>
             </div>
             {/* table body */}

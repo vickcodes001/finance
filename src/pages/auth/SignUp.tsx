@@ -70,7 +70,7 @@ const SignUp = () => {
 
     if (!validate()) return;
 
-    window.location.href = "/";
+    window.location.href = "/login";
   };
 
   return (

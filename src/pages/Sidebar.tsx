@@ -74,7 +74,7 @@ const Sidebar = () => {
               collapsed ? `text-2xl font-bold pl-7 hidden lg:block` : `hidden`
             }
           >
-            ArtFlow
+            FinPlan
           </h2>
           <div className="flex justify-between lg:h-[82vh] px-5 lg:px-0 lg:flex-col">
             {/* each link styling */}
