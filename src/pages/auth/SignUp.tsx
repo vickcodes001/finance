@@ -3,6 +3,7 @@ import desktopAuth from "../../../public/images/auth/finance-login.png";
 import Logo from "../../../public/images/Logo.png";
 import { Link } from "react-router-dom";
 import eyeIcon from "../../../public/images/auth/eye-icon.png";
+import hidden from "../../../public/images/auth/hidden.png";
 
 interface FormData {
   name: string;
@@ -69,49 +70,51 @@ const SignUp = () => {
 
     if (!validate()) return;
 
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   return (
     <>
-      <div className="flex w-full p-5 h-[760px]">
-        <div className="flex flex-col justify-between min-w-[40%] h-full rounded-xl overflow-hidden relative p-10">
+      <div className="flex flex-col gap-30 lg:gap-0 lg:flex-row lg:w-[1224px] mx-auto bg-[#F8F4F0] pt-0 lg:p-5 h-[920px]">
+        <div className="flex flex-col justify-between items-center lg:items-start bg-[#201F24] w-full max-w-[560px] lg:h-full rounded-b-xl lg:rounded-b-0 lg:rounded-xl overflow-hidden relative z-1 p-10">
           <div>
-            <img src={Logo} alt="finance logo image" className="w-[100px]" />
+            <img src={Logo} alt="finance logo image" className="w-[150px]" />
           </div>
           <img
             src={desktopAuth}
             alt="a finance signup image"
-            className="object-cove w-[100%] absolute top-0 left-0 z-[-1]"
+            className="hidden lg:block w-[100%] h-[100%] absolute top-0 left-0 z-[-1]"
           />
-          <div className="flex flex-col gap-3 pr-10">
-            <h1 className="text-xl text-white font-bold pr-20">
+          <div className="hidden lg:flex flex-col gap-3 pr-10">
+            <h1 className="text-3xl text-white font-bold pr-10">
               Keep track of your money and save for your future
             </h1>
-            <p className="text-[10px] text-gray-300">
+            <p className="text-[14px] text-gray-300">
               Personal finance app puts you in control of your spending. Track
               transactions, set budgets, and add to savings pots easily.
             </p>
           </div>
         </div>
-        <div className="flex justify-center items-center min-w-[60%]">
+        <div className="flex justify-center items-center p-5 lg:p-0 w-full max-w-[840px]">
           <form
             onSubmit={handleSubmit}
-            className="w-[100%] lg:w-[60%] space-y-4 p-6 rounded"
+            className="w-full lg:max-w-[450px] space-y-4 p-6 bg-white rounded-md"
           >
-            <h2 className="text-xl font-bold">Sign Up</h2>
+            <h2 className="text-3xl lg:text-xl font-bold">Sign Up</h2>
             <div>
-              <label className="block font-semibold">Name</label>
+              <label className="block text-[14px]">Name</label>
               <input
                 className={inputStyling}
                 name="name"
                 value={form.name}
                 onChange={handleChange}
               />
-              {errors.email && (
-                <p className="text-red-500 text-sm">{errors.email}</p>
+              {errors.name && (
+                <p className="text-red-500 text-sm">{errors.name}</p>
               )}
-              <label className="block font-semibold">Email</label>
+            </div>
+            <div>
+              <label className="block text-[14px]">Email</label>
               <input
                 className={inputStyling}
                 name="email"
@@ -123,8 +126,7 @@ const SignUp = () => {
               )}
             </div>
             <div>
-              <label className="block font-semibold">Password</label>
-
+              <label className="block text-[14px]">Password</label>
               <div className="flex items-center justify-between pr-5 w-full border border-gray-300 rounded">
                 <input
                   className={`w-[85%] border-none outline-none p-2 `}
@@ -133,25 +135,35 @@ const SignUp = () => {
                   value={form.password}
                   onChange={handleChange}
                 />
+                {showPassword ? 
                   <img
                     src={eyeIcon}
-                    alt="an eye icon"
+                    alt="a eye icon"
                     className="cursor-pointer w-[16px] h-[16px]"
                     onClick={handleShowPassword}
                   />
+                  :
+                  <img
+                    src={hidden}
+                    alt="a closed eye icon"
+                    className="cursor-pointer w-[16px] h-[16px]"
+                    onClick={handleShowPassword}
+                  />
+                }
               </div>
               {errors.password && (
                 <p className="text-red-500 text-sm">{errors.password}</p>
               )}
+              <p className="text-[14px] text-right">Passwords must be at least 8 characters</p>
             </div>
             <div className="flex flex-col items-center gap-2">
               <button className="text-[12px] text-white bg-[rgba(32,31,36,1)] cursor-pointer px-4 py-3 rounded w-full text-center">
-                Create Account
+                Sign Up
               </button>
-              <p className="text-gray-500">
-                Already have an account?
+              <p className="text-gray-500 text-[14px] mt-3">
+                Already have an account? 
                 <span>
-                  <Link to="/login" className="text-gray-900 underline">
+                  <Link to="/login" className="text-gray-900 underline ml-3 font-bold">
                     Login
                   </Link>
                 </span>

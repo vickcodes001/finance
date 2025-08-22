@@ -48,7 +48,7 @@ const RecurringBills = ({ detail }: Props) => {
           {RecurringBill.map((bill, index) => (
             <div
               key={index}
-              className={`flex justify-between bg-[#f2e8dd] p-2 rounded-md ${
+              className={`flex justify-between bg-[#F8F4F0] p-2 rounded-md ${
                 bill.title === "Paid Bills"
                   ? "border-3 border-transparent border-l-green-700"
                   : bill.title === "Total Upcoming"

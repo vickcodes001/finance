@@ -28,10 +28,10 @@ const detailsData: details[] = [
 const Pots = () => {
   return (
     <>
-      <div className="flex">
+      <div className="flex w-[1224px] mx-auto">
           <Sidebar />
-          <div className="lg:w-[25%] rounded-t-2xl h-[100vh]"></div>
-          <div className="min-h-screen bg-gray-100 p-6 lg:p-10">
+          <div className="lg:w-[25%] rounded-t-2xl "></div>
+          <div className=" bg-gray-100 p-6 lg:p-10">
             <h2 className="text-2xl font-bold mb-6">Your Pots</h2>
             <PotsCard detail={detailsData} />
           </div>

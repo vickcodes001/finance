@@ -32,13 +32,13 @@ const details = [
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Dashboard detail={details} />} />
-        <Route path="/transaction" element={<Transactions />} />
-        <Route path="/signUp" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/pots" element={<Pots />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Dashboard detail={details} />} />
+          <Route path="/transaction" element={<Transactions />} />
+          <Route path="/signUp" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/pots" element={<Pots />} />
+        </Routes>
     </>
   )
 }

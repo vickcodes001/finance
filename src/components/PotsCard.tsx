@@ -46,7 +46,7 @@ const PotsCard = ({ detail }: Props) => {
         ))}
 
         <div className="flex flex-col lg:flex-row gap-5">
-          <div className="flex gap-5 bg-[#f2e8dd] p-5 rounded-md items-center lg:w-1/2">
+          <div className="flex gap-5 bg-[#F8F4F0] p-5 rounded-md items-center lg:w-1/2">
             <img src="images/card-pot-icon.svg" alt="" />
             <div>
               <p className="text-[12px] text-gray-500">Total Saved</p>

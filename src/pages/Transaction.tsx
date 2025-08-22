@@ -62,9 +62,9 @@ const transactionsData = [
 const Transactions = () => {
   return (
     <>
-      <div className="flex flex-col-reverse lg:flex-row min-w-full bg-[#f2e8dd]">
+      <div className="flex flex-col-reverse lg:flex-row w-[1224px] mx-auto bg-[#f2e8dd]">
         <Sidebar />
-        <div className="flex flex-col gap-10 h-[200vh] p-5 px-10 min-w-[80%]">
+        <div className="flex flex-col gap-10 p-5 px-10 min-w-[80%]">
           <h2 className="text-2xl font-bold">Transactions</h2>
 
           {/* heading */}
