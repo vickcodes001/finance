@@ -5,6 +5,7 @@ import Login from "./pages/auth/Login"
 import { MdArrowRight } from "react-icons/md"
 import Transactions from "./pages/Transaction"
 import Pots from "./pages/Pots"
+import Budget from "./pages/Budget"
 
 const details = [
   {
@@ -38,6 +39,7 @@ function App() {
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/pots" element={<Pots />} />
+          <Route path="/budget" element={<Budget />} />
         </Routes>
     </>
   )

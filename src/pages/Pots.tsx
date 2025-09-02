@@ -1,39 +1,60 @@
-import PotsCard from "../components/PotsCard";
-import type { details } from "../components/type";
+import { useState } from "react";
 import Sidebar from "./Sidebar";
+import { NewPot } from "../components/NewPot";
 
-const detailsData: details[] = [
-  {
-    potTitle: "Main Savings Pot",
-    potDescription: "Manage your savings",
-    potIcon: "💰",
-  },
-  {
-    potTitle: "Gifting Pot",
-    potDescription: "Track gift funds",
-    potIcon: "🎁",
-  },
-  {
-    potTitle: "Event Pot",
-    potDescription: "Concerts & fun",
-    potIcon: "🎫",
-  },
-  {
-    potTitle: "Gadget Pot",
-    potDescription: "For your next device",
-    potIcon: "💻",
-  },
-];
+export type Pot = {title: string}
 
 const Pots = () => {
+  const [potsCard, setPotsCard] = useState<Pot[]>([])
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleNewPotModal = () => {
+    setIsOpen(!isOpen)
+  }
+
+
   return (
     <>
-      <div className="flex w-[1224px] mx-auto">
+      <div className="flex flex-col-reverse lg:flex-row w-[1224px] mx-auto bg-[#F8F4F0]">
           <Sidebar />
-          <div className="lg:w-[25%] rounded-t-2xl "></div>
-          <div className=" bg-gray-100 p-6 lg:p-10">
-            <h2 className="text-2xl font-bold mb-6">Your Pots</h2>
-            <PotsCard detail={detailsData} />
+          {/* heading */}
+          <div className="flex flex-col gap-10 p-5 w-full">
+            {isOpen && <div className="absolute h-[100%] inset-0 bg-black/40 backdrop-blur-sm z-1"></div>}
+              <div className="flex justify-between items-center relative w-full">
+                  <h2 className="text-2xl font-bold">Pots</h2>
+                  <button 
+                    onClick={handleNewPotModal}
+                    className="p-2 bg-[#201F24] rounded-sm text-white text-[12px] cursor-pointer"> 
+                      + Add New Pot
+                  </button>
+                  {isOpen && <div className="absolute z-2 top-100 left-100 bottom-0"><NewPot  isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={(newPot) => setPotsCard([...potsCard, newPot])} /></div>}
+              </div>
+
+              {/* main */}
+              <div>
+                <div className="grid grid-cols-2 gap-4 h-100">
+                    {potsCard.map((pot, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="flex flex-col justify-between bg-white w-full max-w-[1060px] h-50 p-5 rounded-xl"
+                        >
+                          <h2 className="text-xl font-semibold">{pot.title}</h2>
+                          <div>
+                            <div>
+                              <p>Total Saved</p>
+
+                            </div>
+                          </div>
+                          <footer>
+                            
+                          </footer>
+                        </div>
+                      )
+                    })}
+                </div>
+                <div></div>
+              </div>
           </div>
       </div>
     </>

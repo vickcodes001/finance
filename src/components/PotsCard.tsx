@@ -13,7 +13,7 @@ const Pots = [
   },
   {
     title: "Concert Ticket",
-    amount: 0,
+    amount: 100,
   },
   {
     title: "New Laptop",

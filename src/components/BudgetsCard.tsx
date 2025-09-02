@@ -30,7 +30,7 @@ const Budgets = [
 // const chart = Budgets.reduce((sum, item) => sum + item.amount, 0 )
 
 const BudgetsCard = ({ detail }: Props) => {
-  const budgetsDetail = detail.filter(
+  const budgetsDetail = (detail || [  ]).filter(
     (d) => d.budgetTitle && d.budgetDescription && d.budgetIcon
   );
 
@@ -43,7 +43,7 @@ const BudgetsCard = ({ detail }: Props) => {
               <div className="flex justify-between" key={index}>
                 <h3 className="font-bold text-xl">{budget.budgetTitle}</h3>
                 <Link
-                  to="/budgets"
+                  to="/budget"
                   className="flex items-center justify-end gap-2 text-gray-500"
                 >
                   <p className="text-[12px]">{budget.budgetDescription}</p>
