@@ -12,7 +12,7 @@ interface Props {
 
 const Dashboard = ({ detail }: Props) => {
   return (
-    <div className="flex flex-col-reverse w-[1224px] mx-auto lg:flex-row relative bg-[#F8F4F0]">
+    <div className="flex flex-col-reverse lg:w-[1224px] mx-auto lg:flex-row relative bg-[#F8F4F0]">
       <Sidebar />
 
       <div className="flex flex-col gap-5 py-5 px-5 lg:px-10 lg:w-full lg:max-w-[100%]">

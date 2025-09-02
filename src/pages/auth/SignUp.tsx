@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import desktopAuth from "../../../public/images/auth/finance-login.png";
-import Logo from "../../../public/images/Logo.png";
 import { Link } from "react-router-dom";
 import eyeIcon from "../../../public/images/auth/eye-icon.png";
 import hidden from "../../../public/images/auth/hidden.png";
@@ -76,9 +75,9 @@ const SignUp = () => {
   return (
     <>
       <div className="flex flex-col gap-30 lg:gap-0 lg:flex-row lg:w-[1224px] mx-auto bg-[#F8F4F0] pt-0 lg:p-5 h-[920px]">
-        <div className="flex flex-col justify-between items-center lg:items-start bg-[#201F24] w-full max-w-[560px] lg:h-full rounded-b-xl lg:rounded-b-0 lg:rounded-xl overflow-hidden relative z-1 p-10">
+        <div className="flex flex-col justify-between items-center mx-auto lg:items-start bg-[#201F24] w-full max-w-[760px] lg:h-full rounded-b-xl lg:rounded-b-0 lg:rounded-xl overflow-hidden relative z-1 p-10">
           <div>
-            <img src={Logo} alt="finance logo image" className="w-[150px]" />
+            <h2 className="text-3xl font-bold pl-7 text-white lg:block">FinPlan</h2>
           </div>
           <img
             src={desktopAuth}
@@ -95,7 +94,7 @@ const SignUp = () => {
             </p>
           </div>
         </div>
-        <div className="flex justify-center items-center p-5 lg:p-0 w-full max-w-[840px]">
+        <div className="flex mx-auto justify-center items-center p-5 lg:p-0 w-full max-w-[740px]">
           <form
             onSubmit={handleSubmit}
             className="w-full lg:max-w-[450px] space-y-4 p-6 bg-white rounded-md"
