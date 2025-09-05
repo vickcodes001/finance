@@ -3,6 +3,7 @@ import desktopAuth from "../../../public/images/auth/finance-login.png";
 import { Link } from "react-router-dom";
 import eyeIcon from "../../../public/images/auth/eye-icon.png";
 import hidden from "../../../public/images/auth/hidden.png";
+import axios from "axios";
 
 interface FormData {
   name: string;
@@ -19,7 +20,6 @@ const SignUp = () => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(true);
-
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,11 +53,10 @@ const SignUp = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      console.log("✅ Valid form submitted:", form);
-      alert("Form submitted successfully!");
+      console.log("Valid form submitted:", form);
       // Reset form if needed:
       setForm({ name: "", email: "", password: "" });
       setErrors({});
@@ -68,6 +67,13 @@ const SignUp = () => {
     }, 3000);
 
     if (!validate()) return;
+
+      try {
+      const res = await axios.post("http://localhost:5000/api/auth/signup", form);
+      console.log("User saved:", res.data);
+    } catch (err) {
+      console.error("Error saving user:", err);
+    }
 
     window.location.href = "/login";
   };

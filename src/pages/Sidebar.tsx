@@ -1,9 +1,10 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate,  } from "react-router-dom";
 import {
   PiArrowFatLineLeftFill,
   PiArrowFatLineRightFill,
 } from "react-icons/pi";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import { TbLogout2 } from "react-icons/tb";
 
 const iconStyling = "w-full max-w-[50px] lg:w-[14px]"
 
@@ -17,7 +18,7 @@ const minimizedSidebar = "lg:max-w-[100px] pt-25";
 const NavItems = [
   {
     path: "/",
-    icon: <img src="images/home-icon.png" alt="" className={iconStyling}/>,
+    icon: <img src="images/home.png" alt="" className={iconStyling}/>,
     name: "Overview",
   },
   {
@@ -42,10 +43,16 @@ const NavItems = [
   },
 ];
 
-const Sidebar = () => {
+interface SidebarProps {
+  setUser: Dispatch<SetStateAction<string | null>>
+}
+
+const Sidebar = ({ setUser } : SidebarProps) => {
   const [collapsed, setCollapsed] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate()
 
+  // event for minimizing the sidebar
   const handleMinimize = () => {
     if (collapsed) {
       setCollapsed(false);
@@ -53,6 +60,13 @@ const Sidebar = () => {
       setCollapsed(true);
     }
   };
+
+  // event for logging out user
+  const handleLogout = () => {
+    localStorage.removeItem("username")
+    setUser(null)
+    navigate("/login")
+  }
 
   useEffect(() => {
     const saved = localStorage.getItem("sidebar-collapsed");
@@ -85,27 +99,36 @@ const Sidebar = () => {
                   to={items.path}
                   className={`${linkStyling} ${
                     location.pathname === items.path
-                      ? "lg:pl-6 py-1  gap-2 rounded-t-md lg:rounded-t-none lg:rounded-r-md text-gray-900 text-3xl lg:border-l-[rgba(39,124,120,1)] lg:text-[14px] bg-white"
+                      ? "lg:pl-6 py-1 gap-2 rounded-t-md lg:rounded-t-none bg-white lg:rounded-r-md text-gray-900 text-3xl lg:border-l-[rgba(39,124,120,1)] lg:text-[14px]"
                       : ""
                   }`}
                 >
-                  <p className={`${ collapsed ? "" : "text-xl"} w-8 lg:w-4`}>{items.icon}</p>
+                  <p className={`${collapsed ? "" : "text-xl"} w-5 lg:w-4`}>{items.icon}</p>
                   <p className={`${collapsed ? "lg:block" : "hidden"} hidden`}>{items.name}</p>
                 </Link>
               ))}
             </div>
 
-            <div
-              className={`${linkStyling} hidden lg:flex`}
-              onClick={handleMinimize}
-            >
-              <PiArrowFatLineLeftFill
-                className={collapsed ? "block" : "hidden"}
-              />
-              <PiArrowFatLineRightFill
-                className={collapsed ? "hidden" : "block"}
-              />
-              <p className={collapsed ? "" : "hidden"}>Minimize Menu</p>
+            <div>
+              <div
+                onClick={handleLogout}
+                className={`${linkStyling} !pl-5`}
+              >
+                <TbLogout2  className="text-[20px]" />
+                <p className={`hidden ${collapsed ? "" : "lg:hidden"} lg:block`}>Leave</p>
+              </div>
+              <div
+                className={`${linkStyling} hidden lg:flex`}
+                onClick={handleMinimize}
+              >
+                <PiArrowFatLineLeftFill
+                  className={collapsed ? "block" : "hidden"}
+                />
+                <PiArrowFatLineRightFill
+                  className={collapsed ? "hidden" : "block"}
+                />
+                <p className={collapsed ? "" : "hidden"}>Minimize Menu</p>
+              </div>
             </div>
           </div>
         </div>

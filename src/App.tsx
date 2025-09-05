@@ -6,6 +6,7 @@ import { MdArrowRight } from "react-icons/md"
 import Transactions from "./pages/Transaction"
 import Pots from "./pages/Pots"
 import Budget from "./pages/Budget"
+import { useState } from "react"
 
 const details = [
   {
@@ -31,10 +32,20 @@ const details = [
 ];
 
 function App() {
+  // to display the user's name after sign in
+  const [user, setUser] = useState<string | null>(() => {
+    try {
+      const savedUser = localStorage.getItem("username");
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch (error) {
+      console.error("Error parsing user data from localStorage:", error);
+      return null;
+    }
+  });
   return (
     <>
         <Routes>
-          <Route path="/" element={<Dashboard detail={details} />} />
+          <Route path="/" element={<Dashboard detail={details} user={user} setUser={setUser} />} />
           <Route path="/transaction" element={<Transactions />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/login" element={<Login />} />

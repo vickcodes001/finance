@@ -3,18 +3,17 @@ import desktopAuth from "../../../public/images/auth/finance-login.png";
 import { Link } from "react-router-dom";
 import eyeIcon from "../../../public/images/auth/eye-icon.png";
 import hidden from "../../../public/images/auth/hidden.png";
+import axios, { AxiosError } from "axios";
 
 interface FormData {
-  name: string;
   email: string;
   password: string;
 }
 
 const inputStyling = "w-full border border-gray-300 outline-none p-2 rounded";
 
-const SignUp = () => {
+const Login = () => {
   const [form, setForm] = useState<FormData>({
-    name: "",
     email: "",
     password: "",
   });
@@ -38,7 +37,6 @@ const SignUp = () => {
   const validate = () => {
     const newErrors: Partial<FormData> = {};
 
-    if (!form.name.trim()) newErrors.name = "Name is required";
 
     if (!form.email.trim()) {
       newErrors.email = "Email is required";
@@ -53,24 +51,39 @@ const SignUp = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validate()) {
-      console.log("✅ Valid form submitted:", form);
-      alert("Form submitted successfully!");
-      // Reset form if needed:
-      setForm({ name: "", email: "", password: "" });
-      setErrors({});
-    }
+const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    setTimeout(() => {
-      setErrors({});
-    }, 3000);
+  if (!validate()) return;
 
-    if (!validate()) return;
+  try {
+    const res = await axios.post("http://localhost:5000/api/auth/login", form);
+    console.log("Login success:", res.data);
+    localStorage.setItem("username", JSON.stringify(res.data.user.name))
+    console.log(localStorage);
+    
+
+
+    setForm({ email: "", password: "" });
+    setErrors({});
 
     window.location.href = "/";
-  };
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      const serverError = err as AxiosError<{ message: string }>;
+
+      if (serverError.response) {
+        console.error("Login failed:", serverError.response.data.message);
+        setErrors({ password: serverError.response.data.message });
+      }
+    } else {
+      console.error("Unexpected error:", err);
+    }
+
+    setTimeout(() => setErrors({}), 3000);
+  }
+};
+
 
   return (
     <>
@@ -96,7 +109,7 @@ const SignUp = () => {
         </div>
         <div className="flex justify-center items-center p-5 mx-auto lg:p-0 w-full max-w-[740px]">
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleLogin}
             className="w-full lg:max-w-[450px] space-y-4 p-6 bg-white rounded-md"
           >
             <h2 className="text-3xl lg:text-xl font-bold">Login</h2>
@@ -162,4 +175,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;

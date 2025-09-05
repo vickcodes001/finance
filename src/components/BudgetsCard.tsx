@@ -54,7 +54,7 @@ const BudgetsCard = ({ detail }: Props) => {
           ))}
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-2 justify-between lg:justify-start items-center lg:items-start">
+        <div className="flex flex-col md:flex-row lg:flex-row gap-2 justify-between lg:justify-start items-center lg:items-start">
           {/* chart import */}
           <Chart 
              entertainment={100} 
@@ -64,7 +64,7 @@ const BudgetsCard = ({ detail }: Props) => {
           />
 
           {/* budget mapping */}
-          <div className="grid grid-cols-2 lg:flex lg:flex-col gap-1 w-full lg:w-0">
+          <div className="grid grid-cols-2 md:flex md:flex-col md:w-[100px]  lg:flex-col gap-1 w-full lg:w-0">
             {Budgets.map((budget, index) => (
               <div
                 key={index}

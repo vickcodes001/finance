@@ -10,7 +10,7 @@ const cards = cva(" text-gray-900", {
   variants: {
     size: {
       lg: "flex flex-col gap-7 xl:text-size-lg md:text-size-md text-sm max-w-[600px]",
-      md: "flex flex-col gap-7 xl:text-size-md md:text-size-sm max-w-[400px]",
+      md: "flex flex-col gap-7 xl:text-size-md md:text-size-sm max-w-[600px]",
       sm: "flex flex-col gap-3 xl:text-size-sm md:text-size-xs w-full lg:max-w-[400px] h-25",
     },
     layout: {
