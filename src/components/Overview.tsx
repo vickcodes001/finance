@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 const cards = [
   {
@@ -17,10 +18,6 @@ const cards = [
   // },
 ];
 
-interface OverviewProps {
-  user: string | null;
-}
-
 interface UserData {
   balance: string;
   name: string;
@@ -28,8 +25,9 @@ interface UserData {
 }
 
 
-const Overview = ({ user } : OverviewProps) => {
+const Overview = () => {
   const [userData, setUserData] = useState<UserData | null>(null)
+  const { user } = useUser()
 
   const handleConnect = async () => {
   try {
@@ -74,7 +72,7 @@ useEffect(() => {
           user 
           ? 
           <div className="flex items-center gap-2">
-            <p className="font-bold">Welcome {user}</p> 
+            <p className="font-bold">Welcome {user.username}</p> 
             { userData ? <div></div> :
               <button onClick={handleConnect} className="p-2 bg-[#201F24] rounded-sm text-white text-[12px] cursor-pointer">connect wallet</button>
             }

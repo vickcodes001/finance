@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Sidebar from "./Sidebar";
 import { NewPot } from "../components/NewPot";
 
 export type Pot = {title: string}
@@ -15,8 +14,7 @@ const Pots = () => {
 
   return (
     <>
-      <div className="flex flex-col-reverse lg:flex-row lg:w-[1224px] mx-auto bg-[#F8F4F0]">
-          <Sidebar />
+      <div>
           {/* heading */}
           <div className="flex flex-col gap-10 p-5 w-full h-[100vh]">
             {isOpen && <div className="absolute h-[100%] inset-0 bg-black/40 backdrop-blur-sm z-1"></div>} {/* background blur effect */}

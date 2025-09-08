@@ -1,7 +1,6 @@
 import Woman from "../../public/images/woman.jpg";
 import Man from "../../public/images/man.jpg";
 import Chinese from "../../public/images/chinese.jpg";
-import Sidebar from "./Sidebar";
 import { CiSearch } from "react-icons/ci";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { IoMdArrowDropleft } from "react-icons/io";
@@ -62,8 +61,7 @@ const transactionsData = [
 const Transactions = () => {
   return (
     <>
-      <div className="flex flex-col-reverse lg:flex-row lg:w-[1224px] pb-60 lg:pb-0 mx-auto bg-[#F8F4F0]">
-        <Sidebar />
+      <div>
         <div className="flex flex-col gap-10 p-5 px-5 lg:px-10 min-w-[80%]">
           <h2 className="text-2xl font-bold">Transactions</h2>
 

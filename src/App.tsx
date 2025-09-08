@@ -6,7 +6,10 @@ import { MdArrowRight } from "react-icons/md"
 import Transactions from "./pages/Transaction"
 import Pots from "./pages/Pots"
 import Budget from "./pages/Budget"
-import { useState } from "react"
+// import { useState } from "react"
+// import Sidebar from "./pages/Sidebar"
+import { UserProvider } from "./context/UserContext"
+import MainLayout from "./layouts/MainLayout"
 
 const details = [
   {
@@ -33,25 +36,35 @@ const details = [
 
 function App() {
   // to display the user's name after sign in
-  const [user, setUser] = useState<string | null>(() => {
-    try {
-      const savedUser = localStorage.getItem("username");
-      return savedUser ? JSON.parse(savedUser) : null;
-    } catch (error) {
-      console.error("Error parsing user data from localStorage:", error);
-      return null;
-    }
-  });
+  // const [user, setUser] = useState<string | null>(() => {
+  //   try {
+  //     const savedUser = localStorage.getItem("username");
+  //     return savedUser ? JSON.parse(savedUser) : null;
+  //   } catch (error) {
+  //     console.error("Error parsing user data from localStorage:", error);
+  //     return null;
+  //   }
+  // });
   return (
     <>
-        <Routes>
-          <Route path="/" element={<Dashboard detail={details} user={user} setUser={setUser} />} />
-          <Route path="/transaction" element={<Transactions />} />
-          <Route path="/signUp" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/pots" element={<Pots />} />
-          <Route path="/budget" element={<Budget />} />
-        </Routes>
+      <UserProvider>
+        <div className="flex flex-col-reverse lg:w-[1224px] mx-auto lg:flex-row relative bg-[#F8F4F0]">
+          {/* <Sidebar /> */}
+            <div className="flex-1">
+              <Routes>
+                <Route path="/signUp" element={<SignUp />} />
+                <Route path="/login" element={<Login />} />
+                
+                <Route element={<MainLayout />}>
+                  <Route path="/" element={<Dashboard detail={details} />} />
+                  <Route path="/transaction" element={<Transactions />} />
+                  <Route path="/pots" element={<Pots />} />
+                  <Route path="/budget" element={<Budget />} />
+                </Route>
+              </Routes>
+            </div>
+        </div>
+      </UserProvider>
     </>
   )
 }

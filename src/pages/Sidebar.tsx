@@ -3,8 +3,9 @@ import {
   PiArrowFatLineLeftFill,
   PiArrowFatLineRightFill,
 } from "react-icons/pi";
-import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useState} from "react";
 import { TbLogout2 } from "react-icons/tb";
+import { useUser } from "../context/UserContext";
 
 const iconStyling = "w-full max-w-[50px] lg:w-[14px]"
 
@@ -38,14 +39,12 @@ const NavItems = [
   },
 ];
 
-interface SidebarProps {
-  setUser: Dispatch<SetStateAction<string | null>>
-}
 
-const Sidebar = ({ setUser } : SidebarProps) => {
+const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(true);
   const location = useLocation();
   const navigate = useNavigate()
+  const { setUser } = useUser()
 
   // event for minimizing the sidebar
   const handleMinimize = () => {

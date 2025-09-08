@@ -1,5 +1,4 @@
 import { useState } from "react"
-import Sidebar from "./Sidebar"
 import { NewBudget } from "../components/NewBudget"
 
 
@@ -12,8 +11,7 @@ const Budget = () => {
 
     return (
         <>
-            <div className="flex flex-col-reverse lg:flex-row lg:w-[1224px] mx-auto bg-[#F8F4F0]">
-                <Sidebar />
+            <div>
                 <div className="flex flex-col gap-10 p-5 w-full">
                     <div className="flex justify-between items-center w-full">
                         <h2 className="text-2xl font-bold">Budgets</h2>

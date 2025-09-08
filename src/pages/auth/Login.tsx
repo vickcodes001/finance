@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import eyeIcon from "../../../public/images/auth/eye-icon.png";
 import hidden from "../../../public/images/auth/hidden.png";
 import axios, { AxiosError } from "axios";
+import { Loader2 } from "lucide-react";
 
 interface FormData {
   email: string;
@@ -18,8 +19,8 @@ const Login = () => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(true);
-
   const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -51,22 +52,22 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-const handleLogin = async (e: React.FormEvent) => {
-  e.preventDefault();
-
-  if (!validate()) return;
-
-  try {
-    const res = await axios.post("https://finance-poc.onrender.com/api/auth/login", form);
+  
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    
+    if (!validate()) return;
+    
+    try {
+      const res = await axios.post("https://finance-poc.onrender.com/api/auth/login", form);
     console.log("Login success:", res.data);
     localStorage.setItem("username", JSON.stringify(res.data.user.name))
     console.log(localStorage);
     
-
-
     setForm({ email: "", password: "" });
     setErrors({});
-
+    
     window.location.href = "/";
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -79,7 +80,9 @@ const handleLogin = async (e: React.FormEvent) => {
     } else {
       console.error("Unexpected error:", err);
     }
-
+    
+    setLoading(true)
+    
     setTimeout(() => setErrors({}), 3000);
   }
 };
@@ -156,8 +159,12 @@ const handleLogin = async (e: React.FormEvent) => {
               )}
             </div>
             <div className="flex flex-col items-center gap-2">
-              <button className="text-[12px] text-white bg-[rgba(32,31,36,1)] cursor-pointer px-4 py-3 rounded w-full text-center">
-                Login
+              <button className="flex justify-center text-[12px] text-white bg-[rgba(32,31,36,1)] cursor-pointer px-4 py-3 rounded w-full text-center">
+               {loading ?
+                <Loader2 className="flex h-4 w-4 animate-spin" />
+                :
+                <p>Login</p>
+               }
               </button>
               <p className="text-gray-500 text-[14px] mt-3">
                 Need to create an account? 
