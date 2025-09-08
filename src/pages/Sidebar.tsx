@@ -11,7 +11,7 @@ const iconStyling = "w-full max-w-[50px] lg:w-[14px]"
 const linkStyling =
   "flex gap-4 items-center lg:pl-6 py-1 px-3 lg:px-0 lg:rounded-r-md text-3xl lg:text-[12px] font-bold lg:h-10 hover:bg-white hover:text-gray-900 border-4 border-transparent hover:border-l-[rgba(39,124,120,1)] hover:text-[#0EA5E9] cursor-pointer";
 
-const baseSidebarClasses ="lg:w-full rounded-t-2xl lg:rounded-r-2xl lg:rounded-t-none flex flex-col justify-between gap-15 py-5 lg:pr-3 bg-[rgba(32,31,36,1)] text-[#CBD5E1]";
+const baseSidebarClasses ="w-full rounded-t-2xl fixed bottom-0 lg:static z-2 lg:rounded-r-2xl lg:rounded-t-none flex flex-col justify-between gap-15 py-5 lg:pr-3 bg-[rgba(32,31,36,1)] text-[#CBD5E1]";
 const expandedSidebar = "lg:max-w-[200px]";
 const minimizedSidebar = "lg:max-w-[100px] pt-25";
 
@@ -35,11 +35,6 @@ const NavItems = [
     path: "/pots",
     icon: <img src="images/sidebar-pot-icon.png" alt="" className={iconStyling}/>,
     name: "Pots",
-  },
-  {
-    path: "/recurring-bills",
-    icon: <img src="images/recurring-icon.png" alt="" className={iconStyling}/>,
-    name: "Recurring Bills",
   },
 ];
 

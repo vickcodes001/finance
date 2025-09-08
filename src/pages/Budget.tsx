@@ -12,7 +12,7 @@ const Budget = () => {
 
     return (
         <>
-            <div className="flex flex-col-reverse lg:flex-row w-[1224px] mx-auto bg-[#F8F4F0]">
+            <div className="flex flex-col-reverse lg:flex-row lg:w-[1224px] mx-auto bg-[#F8F4F0]">
                 <Sidebar />
                 <div className="flex flex-col gap-10 p-5 w-full">
                     <div className="flex justify-between items-center w-full">

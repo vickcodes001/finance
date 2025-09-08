@@ -69,7 +69,7 @@ const SignUp = () => {
     if (!validate()) return;
 
       try {
-      const res = await axios.post("http://localhost:5000/api/auth/signup", form);
+      const res = await axios.post("https://finance-poc.onrender.com/api/auth/signup", form);
       console.log("User saved:", res.data);
     } catch (err) {
       console.error("Error saving user:", err);

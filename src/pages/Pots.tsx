@@ -15,11 +15,11 @@ const Pots = () => {
 
   return (
     <>
-      <div className="flex flex-col-reverse lg:flex-row w-[1224px] mx-auto bg-[#F8F4F0]">
+      <div className="flex flex-col-reverse lg:flex-row lg:w-[1224px] mx-auto bg-[#F8F4F0]">
           <Sidebar />
           {/* heading */}
-          <div className="flex flex-col gap-10 p-5 w-full">
-            {isOpen && <div className="absolute h-[100%] inset-0 bg-black/40 backdrop-blur-sm z-1"></div>}
+          <div className="flex flex-col gap-10 p-5 w-full h-[100vh]">
+            {isOpen && <div className="absolute h-[100%] inset-0 bg-black/40 backdrop-blur-sm z-1"></div>} {/* background blur effect */}
               <div className="flex justify-between items-center relative w-full">
                   <h2 className="text-2xl font-bold">Pots</h2>
                   <button 
@@ -28,6 +28,10 @@ const Pots = () => {
                       + Add New Pot
                   </button>
                   {isOpen && <div className="absolute z-2 top-100 left-100 bottom-0"><NewPot  isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={(newPot) => setPotsCard([...potsCard, newPot])} /></div>}
+              </div>
+
+              <div className="font-semibold pr-10">
+                <p>Pots is for short plannings, think of it like a to-do but with your money. No much stress, add a new pot that you want to use your money to instantaneously do and delete when done.</p>
               </div>
 
               {/* main */}

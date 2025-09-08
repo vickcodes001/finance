@@ -3,7 +3,7 @@ import PotsCard from "../components/PotsCard";
 import Sidebar from "./Sidebar";
 import TransactionCard from "../components/TransactionCard";
 import BudgetsCard from "../components/BudgetsCard";
-import RecurringBills from "../components/RecurringBills";
+// import RecurringBills from "../components/RecurringBills";
 import type { details } from "../components/type";
 import type { Dispatch, SetStateAction } from "react";
 
@@ -26,9 +26,9 @@ const Dashboard = ({ detail, user, setUser }: Props) => {
             <TransactionCard detail={detail} />
           </div>
 
-          <div className="flex flex-col gap-5 lg:w-full lg:max-w-[400px]">
+          <div className="flex flex-col gap-5 lg:w-full lg:max-w-[400px] pb-30">
             <BudgetsCard detail={detail} />
-            <RecurringBills detail={detail} />
+            {/* <RecurringBills detail={detail} /> */}
           </div>
         </div>
       </div>

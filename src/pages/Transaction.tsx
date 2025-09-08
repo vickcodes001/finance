@@ -62,9 +62,9 @@ const transactionsData = [
 const Transactions = () => {
   return (
     <>
-      <div className="flex flex-col-reverse lg:flex-row w-[1224px] mx-auto bg-[#F8F4F0]">
+      <div className="flex flex-col-reverse lg:flex-row lg:w-[1224px] pb-60 lg:pb-0 mx-auto bg-[#F8F4F0]">
         <Sidebar />
-        <div className="flex flex-col gap-10 p-5 px-10 min-w-[80%]">
+        <div className="flex flex-col gap-10 p-5 px-5 lg:px-10 min-w-[80%]">
           <h2 className="text-2xl font-bold">Transactions</h2>
 
           {/* heading */}
@@ -79,7 +79,7 @@ const Transactions = () => {
                 />
                 <CiSearch className="absolute right-2 top-2 text-[12px]" />
               </div>
-              <div className="flex gap-3 text-[12px]">
+              <div className="hidden lg:flex gap-3 text-[12px]">
                 <div className="flex items-center gap-2">
                   <p className="text-gray-600">Sort by</p>
                   <div className="flex items-center justify-center border border-gray-400 w-20 p-2 rounded-md gap-2">
@@ -101,7 +101,7 @@ const Transactions = () => {
             {/* table body */}
             <div>
               <table className="w-full border-collapse  border-slate-400">
-                <thead>
+                <thead className="hidden lg:flex">
                   <tr className="flex justify-between border border-transparent border-b-gray-200 py-4">
                     <th>Recipient / Sender</th>
                     <th>Amount</th>
@@ -114,15 +114,13 @@ const Transactions = () => {
                       key={index}
                       className="flex justify-between border border-transparent border-b-gray-200 py-4 "
                     >
-                      <td className="flex items-center gap-3 w-1/3">
+                      <td className="flex items-center gap-3">
                         <p>{data.image}</p>
                         <p className="text-[12px] font-semibold">{data.name}</p>
                       </td>
-                      <td className="text-[12px] font-semibold text-center w-1/3">
+                      <td className="flex flex-col text-[12px] font-semibold text-center w-">
                         <p>{data.amount}</p>
-                      </td>
-                      <td className="text-[10px] text-gray-400 w-1/3 text-end">
-                        <p>{data.date}</p>
+                        <p className="text-[10px] text-gray-400">{data.date}</p>
                       </td>
                     </tr>
                   ))}
