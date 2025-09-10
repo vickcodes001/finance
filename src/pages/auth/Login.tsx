@@ -84,7 +84,7 @@ const Login = () => {
       console.error("Unexpected error:", err);
     }
     
-    // setLoading(true)
+    setLoading(true)
     
     setTimeout(() => setErrors({}), 3000);
   }
