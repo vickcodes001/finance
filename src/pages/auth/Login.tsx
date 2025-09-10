@@ -5,6 +5,7 @@ import eyeIcon from "../../../public/images/auth/eye-icon.png";
 import hidden from "../../../public/images/auth/hidden.png";
 import axios, { AxiosError } from "axios";
 import { Loader2 } from "lucide-react";
+import { useUser } from "../../context/UserContext";
 
 interface FormData {
   email: string;
@@ -21,6 +22,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [loading, setLoading] = useState(false)
+  const { setUser } = useUser()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -62,7 +64,8 @@ const Login = () => {
     try {
       const res = await axios.post("https://finance-poc.onrender.com/api/auth/login", form);
     console.log("Login success:", res.data);
-    localStorage.setItem("username", JSON.stringify(res.data.user.name))
+    // localStorage.setItem("username", JSON.stringify(res.data.user.name))
+    setUser({ username: res.data.user.name })
     console.log(localStorage);
     
     setForm({ email: "", password: "" });
@@ -81,7 +84,7 @@ const Login = () => {
       console.error("Unexpected error:", err);
     }
     
-    setLoading(true)
+    // setLoading(true)
     
     setTimeout(() => setErrors({}), 3000);
   }

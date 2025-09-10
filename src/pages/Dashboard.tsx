@@ -3,12 +3,9 @@ import PotsCard from "../components/PotsCard";
 import TransactionCard from "../components/TransactionCard";
 import BudgetsCard from "../components/BudgetsCard";
 import type { details } from "../components/type";
-import type { Dispatch, SetStateAction } from "react";
 
 interface Props {
   detail: details[];
-  user: string | null;
-  setUser: Dispatch<SetStateAction<string | null>>
 }
 
 const Dashboard = ({ detail }: Props) => {

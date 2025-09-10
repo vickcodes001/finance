@@ -6,7 +6,7 @@ import { useUser } from "../context/UserContext";
 const cards = [
   {
     title: "Current Balance",
-    amount: "N****",
+    amount: "N*6***",
   },
   // {
   //   title: "Income",
@@ -36,9 +36,9 @@ const Overview = () => {
     });
 
     const redirectUrl = res.data.data.mono_url;
-    const user = res.data.data;
+    // const user = res.data.data;
 
-    localStorage.setItem("pendingConnection", JSON.stringify(user));
+    // localStorage.setItem("pendingConnection", JSON.stringify(user));
 
     window.location.href = redirectUrl;
   } catch (err) {
