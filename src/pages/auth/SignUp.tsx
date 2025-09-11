@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import eyeIcon from "../../../public/images/auth/eye-icon.png";
 import hidden from "../../../public/images/auth/hidden.png";
 import axios from "axios";
+import { Loader2 } from "lucide-react";
 
 interface FormData {
   name: string;
@@ -20,6 +21,7 @@ const SignUp = () => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(true);
+  const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +57,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true)
     if (validate()) {
       console.log("Valid form submitted:", form);
       // Reset form if needed:
@@ -162,8 +165,13 @@ const SignUp = () => {
               <p className="text-[14px] text-right">Passwords must be at least 8 characters</p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <button className="text-[12px] text-white bg-[rgba(32,31,36,1)] cursor-pointer px-4 py-3 rounded w-full text-center">
-                Sign Up
+              <button className="flex justify-center text-[12px] text-white bg-[rgba(32,31,36,1)] cursor-pointer px-4 py-3 rounded w-full text-center">
+              { isLoading 
+              ?
+              <Loader2 className="h-4 w-4 animate-spin"/>
+              :
+                <p>Sign up</p>
+              }     
               </button>
               <p className="text-gray-500 text-[14px] mt-3">
                 Already have an account? 

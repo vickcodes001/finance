@@ -59,6 +59,7 @@ const Login = () => {
     e.preventDefault();
     
     
+    setLoading(true)
     if (!validate()) return;
     
     try {
@@ -84,7 +85,6 @@ const Login = () => {
       console.error("Unexpected error:", err);
     }
     
-    setLoading(true)
     
     setTimeout(() => setErrors({}), 3000);
   }
@@ -165,9 +165,9 @@ const Login = () => {
               <button className="flex justify-center text-[12px] text-white bg-[rgba(32,31,36,1)] cursor-pointer px-4 py-3 rounded w-full text-center">
                {loading ?
                 <Loader2 className="flex h-4 w-4 animate-spin" />
-                :
+              :
                 <p>Login</p>
-               }
+               } 
               </button>
               <p className="text-gray-500 text-[14px] mt-3">
                 Need to create an account? 
