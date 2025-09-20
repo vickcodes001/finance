@@ -1,53 +1,60 @@
-import { useEffect } from "react"
+import { useState } from "react";
+import type { Budget } from "../pages/Budget";
 
-export const NewBudget = (
-    {
-        isOpen, 
-        setIsOpen, 
-        } : 
-    { 
-        isOpen: boolean, 
-        setIsOpen: (open: boolean) => void, 
-        // setPotsCard: (open: boolean) => void 
-    } 
-) => {
+export const NewBudget = ({
+  isOpen,
+  setIsOpen,
+  onSubmit,
+}: {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  onSubmit: (newBudget: Budget) => void;
+}) => {
+  const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState<number | "">("");
 
-    useEffect(() => {
-        const handleClose = () => {
-        setIsOpen(!isOpen)
+  const handleClose = () => setIsOpen(false);
+
+  const handleSubmit = () => {
+    if (title.trim() && amount !== "") {
+      onSubmit({ title, amount: Number(amount) }); 
+      setTitle("");
+      setAmount("");
+      setIsOpen(false);
     }
+  };
 
-    document.addEventListener("click", handleClose, true)
-    }, [])
+  if (!isOpen) return null;
 
-    const handleClose = () => {
-        setIsOpen(!isOpen)
-        // console.log("I was clicked");
-        
-    }
+  return (
+    <div className="flex flex-col p-5 gap-2 rounded-xl bg-white shadow-lg w-72">
+      <div className="flex justify-end">
+        <p onClick={handleClose} className="cursor-pointer">x</p>
+      </div>
+      <p>Please put in your budget title and amount</p>
 
-    const handleSubmit = () => {
+      <input
+        type="text"
+        placeholder="title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        className="bg-white p-2 rounded border border-gray-900 outline-none"
+      />
 
-        setIsOpen(!isOpen)
-    }
+      <input
+        type="number"
+        placeholder="amount"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value === "" ? "" : Number(e.target.value))}
+        className="bg-white p-2 rounded border border-gray-900 outline-none"
+      />
 
-    return (
-        <>
-            {isOpen && 
-            <div className="flex flex-col p-5 gap-2 rounded-xl bg-white">
-
-            <div className="flex justify-end w-full">
-                <p onClick={handleClose} className="cursor-pointer">x</p>
-            </div>
-            <label htmlFor="title">Please put in your budget title</label>
-            <input 
-                type="text" 
-                placeholder="title" 
-                className="bg-white p-2 rounded outline-none border border-gray-900"
-            />
-            <button onClick={handleSubmit} className="p-2 bg-[#201F24] rounded-sm text-white text-[12px] cursor-pointer">done</button>
-            </div>
-            }
-        </>
-    )
-}
+      <button
+        onClick={handleSubmit}
+        className="p-2 bg-[#201F24] rounded-sm text-white text-[12px] cursor-pointer"
+      >
+        done
+      </button>
+    </div>
+  );
+};

@@ -11,13 +11,15 @@ export const NewPot = ({
   onSubmit: (pot: Pot) => void;
 }) => {
   const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState<number | "">("");
 
   const handleClose = () => setIsOpen(false);
 
   const handleSubmit = () => {
-    if (title.trim()) {
-      onSubmit({ title });
+    if (title.trim() && amount !== "") {
+      onSubmit({ title, amount: Number(amount) }); // send both fields
       setTitle("");
+      setAmount("");
       setIsOpen(false);
     }
   };
@@ -27,11 +29,10 @@ export const NewPot = ({
   return (
     <div className="flex flex-col p-5 gap-2 rounded-xl bg-white shadow-lg w-72">
       <div className="flex justify-end">
-        <p onClick={handleClose} className="cursor-pointer">
-          x
-        </p>
+        <p onClick={handleClose} className="cursor-pointer">x</p>
       </div>
-      <label htmlFor="title">Please put in your pot title</label>
+      <p>Please put in your pot title and amount</p>
+
       <input
         type="text"
         placeholder="title"
@@ -39,6 +40,15 @@ export const NewPot = ({
         onChange={(e) => setTitle(e.target.value)}
         className="bg-white p-2 rounded border border-gray-900 outline-none"
       />
+
+      <input
+        type="number"
+        placeholder="amount"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value === "" ? "" : Number(e.target.value))}
+        className="bg-white p-2 rounded border border-gray-900 outline-none"
+      />
+
       <button
         onClick={handleSubmit}
         className="p-2 bg-[#201F24] rounded-sm text-white text-[12px] cursor-pointer"

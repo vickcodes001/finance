@@ -6,8 +6,6 @@ import { MdArrowRight } from "react-icons/md"
 import Transactions from "./pages/Transaction"
 import Pots from "./pages/Pots"
 import Budget from "./pages/Budget"
-// import { useState } from "react"
-// import Sidebar from "./pages/Sidebar"
 import { UserProvider } from "./context/UserContext"
 import MainLayout from "./layouts/MainLayout"
 
@@ -35,21 +33,10 @@ const details = [
 ];
 
 function App() {
-  // to display the user's name after sign in
-  // const [user, setUser] = useState<string | null>(() => {
-  //   try {
-  //     const savedUser = localStorage.getItem("username");
-  //     return savedUser ? JSON.parse(savedUser) : null;
-  //   } catch (error) {
-  //     console.error("Error parsing user data from localStorage:", error);
-  //     return null;
-  //   }
-  // });
   return (
     <>
       <UserProvider>
         <div className="flex flex-col-reverse lg:w-[1224px] mx-auto lg:flex-row relative bg-[#F8F4F0]">
-          {/* <Sidebar /> */}
             <div className="flex-1">
               <Routes>
                 <Route path="/signUp" element={<SignUp />} />

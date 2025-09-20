@@ -2,11 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../context/UserContext";
+import { Loader2 } from "lucide-react";
 
 const cards = [
   {
     title: "Current Balance",
-    amount: "N*6***",
+    amount: "N****",
   },
   // {
   //   title: "Income",
@@ -18,51 +19,58 @@ const cards = [
   // },
 ];
 
-interface UserData {
-  balance: string;
-  name: string;
-  currency: string;
-}
 
 
 const Overview = () => {
-  const [userData, setUserData] = useState<UserData | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [balance, setBalance] = useState<string | null>(null)
   const { user } = useUser()
 
+  console.log(balance);
+  
+
   const handleConnect = async () => {
-  try {
-    const res = await axios.post("https://finance-poc.onrender.com/connect-account-test", {
-      userId: 123,
-    });
+    setIsLoading(true)
+    try {
+      const res = await axios.post("https://finance-poc.onrender.com/connect-account-test", {
+        userId: 123,
+      });
 
-    const redirectUrl = res.data.data.mono_url;
-    // const user = res.data.data;
+      const redirectUrl = res.data.data.mono_url;
+      const user = res.data.data;
 
-    // localStorage.setItem("pendingConnection", JSON.stringify(user));
+      localStorage.setItem("pendingConnection", JSON.stringify(user));
 
-    window.location.href = redirectUrl;
-  } catch (err) {
-    console.error("Error in first step:", err);
-  }
+      window.location.href = redirectUrl
+    } catch (err) {
+      console.error("Error in first step:", err);
+    }
 };
 
 //When page loads again, run second request
 useEffect(() => {
+  const fetchData = async () => {
   const pending = localStorage.getItem("pendingConnection");
   if (pending) {
-    (async () => {
       try {
         const accountGotten = await axios.get("https://finance-poc.onrender.com/accounts");
-        console.log("account:", accountGotten.data.data[0]);
-        setUserData(accountGotten.data.data[0]);
+        const balance = accountGotten.data.data[0].balance
 
+        setBalance(balance)
+        localStorage.setItem("accountBalance", JSON.stringify(balance));
+        
         localStorage.removeItem("pendingConnection");
       } catch (error) {
         console.error("Error fetching account:", error);
       }
-    })();
+    }
   }
+  fetchData()
 }, []);
+
+const renderedBalance = localStorage.getItem("accountBalance")
+
+
 
   return (
     <div className="flex flex-col w-full gap-10">
@@ -72,9 +80,19 @@ useEffect(() => {
           user 
           ? 
           <div className="flex items-center gap-2">
-            <p className="font-bold">Welcome {user.username}</p> 
-            { userData ? <div></div> :
-              <button onClick={handleConnect} className="p-2 bg-[#201F24] rounded-sm text-white text-[12px] cursor-pointer">connect wallet</button>
+            <p className="font-bold">Welcome {user}</p> 
+            { renderedBalance 
+              ? 
+              <div></div> 
+              :
+              <button onClick={handleConnect} className="p-2 bg-[#201F24] rounded-sm text-white text-[12px] cursor-pointer">
+                {isLoading 
+                  ?
+                  <Loader2 className="h-4 w-4 animate-spin"/>
+                  :
+                  <p>connect wallet</p>
+                }
+              </button>
             }
           </div>
           :
@@ -89,14 +107,14 @@ useEffect(() => {
         }
       </div>
       <div className="flex flex-col lg:flex-row gap-5 w-full max-w-[1000px]">
-        {cards.map((card, index) => (
-          <div key={index} className={`flex flex-col gap-3 xl:text-size-sm md:text-size-xs w-full lg:max-w-[400px] h-25 p-5 rounded-xl ${index === 0 ? "bg-[rgba(32,31,36,1)] text-white" : "bg-white"}`}>
-              <p className="text-[12px]">{card.title}</p>
-              {
-                userData ? <p className="text-2xl font-bold"> N{userData.balance}</p> : <p className="text-2xl font-bold">{card.amount}</p>
-              }
-          </div>
-        ))}
+          {cards.map((card, index) => (
+            <div key={index} className={`flex flex-col gap-3 xl:text-size-sm md:text-size-xs w-full lg:max-w-[400px] h-25 p-5 rounded-xl ${index === 0 ? "bg-[rgba(32,31,36,1)] text-white" : "bg-white"}`}>
+                <p className="text-[12px]">{card.title}</p>
+                {
+                  renderedBalance ? <p className="text-2xl font-bold"> N{Number(renderedBalance).toLocaleString()}</p> : <p className="text-2xl font-bold">{card.amount}</p>
+                }
+            </div>
+          ))}
       </div>
     </div>
   );

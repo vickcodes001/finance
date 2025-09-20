@@ -58,7 +58,8 @@ const Sidebar = () => {
   // event for logging out user
   const handleLogout = () => {
     localStorage.removeItem("username")
-    setUser(null)
+    localStorage.removeItem("accountBalance")
+    setUser(' ')
     navigate("/login")
   }
 

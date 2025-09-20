@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import desktopAuth from "../../../public/images/auth/finance-login.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import eyeIcon from "../../../public/images/auth/eye-icon.png";
 import hidden from "../../../public/images/auth/hidden.png";
 import axios, { AxiosError } from "axios";
@@ -23,6 +23,7 @@ const Login = () => {
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [loading, setLoading] = useState(false)
   const { setUser } = useUser()
+  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,11 +31,7 @@ const Login = () => {
   };
 
   const handleShowPassword = () => {
-    if (showPassword === true) {
-      setShowPassword(false);
-    } else {
-      setShowPassword(true)
-    }
+    setShowPassword(!showPassword)
   };
 
   const validate = () => {
@@ -65,14 +62,14 @@ const Login = () => {
     try {
       const res = await axios.post("https://finance-poc.onrender.com/api/auth/login", form);
     console.log("Login success:", res.data);
-    // localStorage.setItem("username", JSON.stringify(res.data.user.name))
-    setUser({ username: res.data.user.name })
-    console.log(localStorage);
+    setUser(res.data.user.name)
+    localStorage.setItem("username", res.data.user.name)
+    
     
     setForm({ email: "", password: "" });
     setErrors({});
     
-    window.location.href = "/";
+    navigate("/");
   } catch (err) {
     if (axios.isAxiosError(err)) {
       const serverError = err as AxiosError<{ message: string }>;

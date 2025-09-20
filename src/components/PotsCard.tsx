@@ -1,36 +1,33 @@
 import { Link } from "react-router-dom";
 import type { details } from "./type";
 import Card from "./Cards";
+import { useUser } from "../context/UserContext";
+import { useEffect, useState } from "react";
 
-const Pots = [
-  {
-    title: "Savings",
-    amount: 0,
-  },
-  {
-    title: "Gift",
-    amount: 0,
-  },
-  {
-    title: "Concert Ticket",
-    amount: 0,
-  },
-  {
-    title: "New Laptop",
-    amount: 0,
-  },
-];
-
-const totalAmount = Pots.reduce((sum, item) => sum + item.amount, 0)
+export type pot = {title: string, amount: number}
 
 interface Props {
   detail: details[];
 }
 
+
+
 const PotsCard = ({ detail }: Props) => {
-  const potDetails = detail.filter(
-    (d) => d.potTitle && d.potDescription && d.potIcon
-  );
+  const [potsGotten, setPotsGotten] = useState<pot[]>([])
+  const potDetails = detail.filter((d) => d.potTitle && d.potDescription && d.potIcon);
+  const { accountBalance } = useUser()
+  console.log("account balance", accountBalance);
+  
+  const totalAmount = potsGotten.reduce((sum, item) => sum + item.amount, 0);
+  
+  useEffect(() => {
+  const saved = localStorage.getItem("potsCard");
+  if (saved) {
+    setPotsGotten(JSON.parse(saved));
+  }
+}, []);
+
+  
 
   return (
     <>
@@ -50,12 +47,12 @@ const PotsCard = ({ detail }: Props) => {
             <img src="images/card-pot-icon.svg" alt="" />
             <div>
               <p className="text-[12px] text-gray-500">Total Saved</p>
-              <p className="text-3xl font-bold">${totalAmount}</p>
+              <p className="text-2xl font-bold">N{Number(totalAmount).toLocaleString()}</p>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3 lg:w-1/2">
-            {Pots.map((pot, index) => (
+            {potsGotten.map((pot, index) => (
               <div
                 key={index}
                 className={`px-3 rounded-l-[4px] ${
@@ -69,7 +66,7 @@ const PotsCard = ({ detail }: Props) => {
                 }`}
               >
                 <p className="text-[10px] text-gray-500">{pot.title}</p>
-                <p className="font-semibold text-[14px]">${pot.amount}</p>
+                <p className="font-semibold text-[14px]">N{Number(pot.amount).toLocaleString()}</p>
               </div>
             ))}
           </div>

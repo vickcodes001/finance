@@ -1,96 +1,92 @@
-import { useState } from "react";
+import * as React from "react"
+import { Label, Pie, PieChart } from "recharts"
 
-const radius = 70;
-const circumference = 2 * Math.PI * radius;
+import { Card, CardContent } from "@/components/ui/card"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import type { ChartConfig } from "@/components/ui/chart"
 
-type CircularProgressProps = {
-  entertainment: number;
-  bill: number;
-  dinning: number;
-  max: number;
-};
+type Store = { title: string; amount: number }
+type ChartDatum = { browser: string; visitors: number; fill: string }
 
-const Chart = ({ entertainment, bill, dinning, max }: CircularProgressProps) => {
-  const entertainmentPercent = (entertainment / max) * 100;
-  const billPercent = (bill / max) * 100;
-  const dinningPercent = (dinning / max) * 100;
 
-  const entertainmentOffset =
-    circumference - (entertainmentPercent / 100) * circumference;
-  const billOffset = circumference - (billPercent / 100) * circumference;
-  const dinningOffset = circumference - (dinningPercent / 100) * circumference;
 
-  const [isHovered, setIsHovered] = useState(false);
+// this is where the component started from
+const Chart = () => {
+  const [chart, setChart] = React.useState<Store[]>(() => {
+    const saved = localStorage.getItem("budgetsCard")
+    return saved ? JSON.parse(saved) : [] 
+    setChart(chart)
+  })
+  const chartData : ChartDatum[] = chart.map((dStored: Store, i: number) => ({ 
+    browser: dStored.title, 
+    visitors: dStored.amount, 
+    fill: `var(--chart-${i+1})`
+  }))
+
+  const chartConfig = {
+    visitors: {
+      label: "Visitors",
+    }
+  } satisfies ChartConfig
+
+  const totalBudget = React.useMemo(() => {
+    return chartData.reduce((acc, curr) => acc + curr.visitors, 0)
+  }, [chartData ])
 
   return (
-    <div
-      className="flex items-center justify-center h-52 w-50 relative cursor-pointer"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <svg className="" viewBox="0 0 208 208">
-        {/* Base circle */}
-        <circle
-          cx={104}
-          cy={104}
-          r={radius}
-          stroke="#e5e7eb"
-          strokeWidth="25"
-          fill="none"
-          className="w-100 border"
-        />
+    <Card className="flex flex-col">
+      <CardContent className="flex-1 pb-0 h-200 w-70 p-0">
+        <ChartContainer
+          config={chartConfig}
+          className="mx-auto aspect-square max-h-[250px]"
+        >
+          <PieChart>
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
+            <Pie
+              data={chartData}
+              dataKey="visitors"
+              nameKey="browser"
+              innerRadius={60}
+              strokeWidth={5}
+            >
+              <Label
+                content={({ viewBox }) => {
+                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                    return (
+                      <text
+                        x={viewBox.cx}
+                        y={viewBox.cy}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                      >
+                        <tspan
+                          x={viewBox.cx}
+                          y={viewBox.cy}
+                          className="fill-foreground text-3xl font-bold"
+                        >
+                          {totalBudget.toLocaleString()}
+                        </tspan>
+                        <tspan
+                          x={viewBox.cx}
+                          y={(viewBox.cy || 0) + 24}
+                          className="fill-muted-foreground"
+                        >
+                          Total Budget
+                        </tspan>
+                      </text>
+                    )
+                  }
+                }}
+              />
+            </Pie>
+          </PieChart>
+        </ChartContainer>
+      </CardContent>
+    </Card>
+  )
+}
 
-        {/* dinning (Red) */}
-        <circle
-          cx={104}
-          cy={104}
-          r={radius}
-          stroke="#ef4444"
-          strokeWidth="25"
-          fill="none"
-          strokeDasharray={circumference}
-          strokeDashoffset={isHovered ? dinningOffset : circumference}
-          strokeLinecap="round"
-          className="transition-all duration-1000 ease-out"
-        />
-
-        {/* bill (Blue) */}
-        <circle
-          cx={104}
-          cy={104}
-          r={radius}
-          stroke="#3b82f6"
-          strokeWidth="25"
-          fill="none"
-          strokeDasharray={circumference}
-          strokeDashoffset={isHovered ? billOffset : circumference}
-          strokeLinecap="round"
-          className="transition-all duration-1000 ease-out"
-        />
-
-        {/* entertainment (Green) */}
-        <circle
-          cx={104}
-          cy={104}
-          r={radius}
-          stroke="#10b981"
-          strokeWidth="25"
-          fill="none"
-          strokeDasharray={circumference}
-          strokeDashoffset={isHovered ? entertainmentOffset : circumference}
-          strokeLinecap="round"
-          className="transition-all duration-1000 ease-out"
-        />
-      </svg>
-
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-900">
-        <h2 className="text-2xl font-bold">
-          ${(entertainment + bill + dinning).toFixed(2)}
-        </h2>
-        <p className="text-[10px]">of ${max.toFixed(2)} limit</p>
-      </div>
-    </div>
-  );
-};
-
-export default Chart;
+export default Chart

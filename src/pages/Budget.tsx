@@ -1,38 +1,82 @@
-import { useState } from "react"
-import { NewBudget } from "../components/NewBudget"
+import { useEffect, useState } from "react";
+import { MdDelete } from "react-icons/md";
+import { NewBudget } from "../components/NewBudget";
+
+export type Budget = {title: string, amount: number}
+const balance = localStorage.getItem("accountBalance")
 
 
-const Budget = () => {
-    const [isOpen, setIsOpen] = useState(false)
+const Budgets = () => {
+  const [budgetsCard, setBudgetsCard] = useState<Budget[]>(() => {
+  const saved = localStorage.getItem("budgetsCard");
+  return saved ? JSON.parse(saved) : [];
+});
+  const [isOpen, setIsOpen] = useState(false)
+  
+  useEffect(() => {
+   localStorage.setItem("budgetsCard", JSON.stringify(budgetsCard))
+  }, [budgetsCard])
 
-    const handleBudgetModal = () => {
-        setIsOpen(!isOpen)
-    }
 
-    return (
-        <>
-            <div>
-                <div className="flex flex-col gap-10 p-5 w-full">
-                    <div className="flex justify-between items-center w-full">
-                        <h2 className="text-2xl font-bold">Budgets</h2>
-                        <button onClick={handleBudgetModal} className="p-2 bg-[#201F24] rounded-sm cursor-pointer text-white text-[12px]"> + Add New Budget</button>
-                        {isOpen && <div><NewBudget isOpen={isOpen} setIsOpen={setIsOpen}/></div>}
-                    </div>
+  const handleNewBudgetModal = () => {
+    setIsOpen(!isOpen)
+  }
 
-                    <div className="flex justify-between">
-                        <div className="h-120 bg-white w-full max-w-[400px] rounded-xl"></div>
-                        {/* side column */}
-                        <div className="flex flex-col w-full max-w-[560px] gap-5">
-                            <div className="h-100 w-full bg-white rounded-xl"></div>
-                            <div className="h-100 w-full bg-white rounded-xl"></div>
-                            <div className="h-100 w-full bg-white rounded-xl"></div>
-                            <div className="h-100 w-full bg-white rounded-xl"></div>
-                        </div>
-                    </div>
+  const handleDelete = (index: number) => {
+    setBudgetsCard(budgetsCard.filter((_, i) => i !== index));
+  }
+
+
+  return (
+    <>
+      <div>
+          {/* heading */}
+          <div className="flex flex-col gap-10 p-5 w-full h-[100vh]">
+            {isOpen && <div className="absolute h-[100%] inset-0 bg-black/40 backdrop-blur-sm z-1"></div>} {/* background blur effect */}
+              <div className="flex justify-between items-center relative w-full">
+                  <h2 className="text-2xl font-bold">Budgets</h2>
+                  <button 
+                    onClick={handleNewBudgetModal}
+                    className="p-2 bg-[#201F24] rounded-sm text-white text-[12px] cursor-pointer"> 
+                      + Add New Budget
+                  </button>
+                  {
+                    isOpen && 
+                    <div className="absolute z-2 top-50 left-8 lg:top-100 lg:left-100 bottom-0">
+                      <NewBudget isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={(newBudget) => setBudgetsCard([...budgetsCard, newBudget])} />
+                    </div>}
+              </div>
+
+              <div className="font-semibold pr-10">
+                <p>Budgets is for short plannings. Think of it like a to-do but with your money. No much stress, add a new Budget that you want to use your money to instantaneously do and delete when done.</p>
+              </div>
+
+              {/* main */}
+              <div className="flex flex-col gap-5 ">
+                <div className="flex gap-2">
+                  <p className="font-bold">Available Balance:</p>
+                  <p className="font-semibold">N{Number(balance).toLocaleString()}</p>
                 </div>
-            </div>
-        </>
-    )
-}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-110 lg:h-165 pt-5 pb-5 overflow-y-scroll">
+                    {budgetsCard.map((Budget, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="flex flex-col justify-between bg-white w-full max-w-[1060px] h-50 p-5 rounded-xl relative"
+                        >
+                          <h2 className="text-xl font-semibold">{Budget.title}</h2>
+                          <p className="text-xl font-semibold">{Number(Budget.amount).toLocaleString()}</p>
+                          <MdDelete className="absolute right-5 cursor-pointer" onClick={() => handleDelete(index)} />
+                        </div>
+                      )
+                    })}
+                </div>
+                <div></div>
+              </div>
+          </div>
+      </div>
+    </>
+  );
+};
 
-export default Budget
+export default Budgets;
