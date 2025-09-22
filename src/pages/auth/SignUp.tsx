@@ -60,8 +60,6 @@ const SignUp = () => {
     setIsLoading(true)
     if (validate()) {
       console.log("Valid form submitted:", form);
-      // Reset form if needed:
-      setForm({ name: "", email: "", password: "" });
       setErrors({});
     }
 
