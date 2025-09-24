@@ -44,8 +44,9 @@ const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(true);
   const location = useLocation();
   const navigate = useNavigate()
-  const { setUser } = useUser()
+  const { user, setUser } = useUser()
 
+  
   // event for minimizing the sidebar
   const handleMinimize = () => {
     if (collapsed) {
@@ -57,10 +58,12 @@ const Sidebar = () => {
 
   // event for logging out user
   const handleLogout = () => {
-    localStorage.removeItem("username")
-    localStorage.removeItem("accountBalance")
+  ["username", "accountBalance", "budgetsCard", "potsCard"].forEach(key =>
+    localStorage.removeItem(key)
+  );
+
     setUser(' ')
-    navigate("/login")
+    navigate("/login", { replace: true })
   }
 
   useEffect(() => {
@@ -69,7 +72,7 @@ const Sidebar = () => {
       setCollapsed(saved === "true");
     }
   }, []);
-
+  
   useEffect(() => {
     localStorage.setItem("sidebar-collapsed", collapsed.toString());
   }, [collapsed]);
@@ -88,10 +91,19 @@ const Sidebar = () => {
           <div className="flex justify-between lg:h-[82vh] px-5 lg:px-0 lg:flex-col">
             {/* each link styling */}
             <div className="flex lg:flex-col gap-2 justify-between w-full">
-              {NavItems.map((items, idx) => (
+              {NavItems.map((items, idx) => {
+                const restricted = !user && items.path !== "/";
+
+                return (
                 <Link
                   key={idx}
-                  to={items.path}
+                  to={restricted ? "#" : items.path}
+                  onClick={(e) => {
+                    if (restricted) {
+                      e.preventDefault();
+                      navigate("/login")
+                    }
+                  }}
                   className={`${linkStyling} ${
                     location.pathname === items.path
                       ? "lg:pl-6 py-1 gap-2 rounded-t-md lg:rounded-t-none bg-white lg:rounded-r-md text-gray-900 text-3xl lg:border-l-[rgba(39,124,120,1)] lg:text-[14px]"
@@ -101,7 +113,8 @@ const Sidebar = () => {
                   <p className={`${collapsed ? "" : "text-xl"} w-5 lg:w-4`}>{items.icon}</p>
                   <p className={`${collapsed ? "lg:block" : "hidden"} hidden`}>{items.name}</p>
                 </Link>
-              ))}
+              )
+              })}
             </div>
 
             <div>

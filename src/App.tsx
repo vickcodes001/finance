@@ -42,12 +42,12 @@ function App() {
                 <Route path="/signUp" element={<SignUp />} />
                 <Route path="/login" element={<Login />} />
                 
-                <Route element={<MainLayout />}>
-                  <Route path="/" element={<Dashboard detail={details} />} />
-                  <Route path="/transaction" element={<Transactions />} />
-                  <Route path="/pots" element={<Pots />} />
-                  <Route path="/budget" element={<Budget />} />
-                </Route>
+                  <Route element={<MainLayout />}>
+                    <Route path="/" element={<Dashboard detail={details} />} />
+                    <Route path="/transaction" element={<Transactions />} />
+                    <Route path="/pots" element={<Pots />} />
+                    <Route path="/budget" element={<Budget />} />
+                  </Route>
               </Routes>
             </div>
         </div>
