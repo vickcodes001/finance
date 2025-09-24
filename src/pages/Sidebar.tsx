@@ -101,7 +101,7 @@ const Sidebar = () => {
                   onClick={(e) => {
                     if (restricted) {
                       e.preventDefault();
-                      navigate("/login")
+                      navigate("/login", {replace: true})
                     }
                   }}
                   className={`${linkStyling} ${
