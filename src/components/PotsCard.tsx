@@ -44,7 +44,7 @@ const PotsCard = ({ detail }: Props) => {
 
         <div className="flex flex-col lg:flex-row gap-5">
           <div className="flex gap-5 bg-[#F8F4F0] p-5 rounded-md items-center lg:w-1/2">
-            <img src="images/card-pot-icon.svg" alt="" />
+            <img src="images/card-pot-icon.svg" alt="" loading="lazy"/>
             <div>
               <p className="text-[12px] text-gray-500">Total Saved</p>
               <p className="text-2xl font-bold">N{Number(totalAmount).toLocaleString()}</p>

@@ -99,6 +99,7 @@ const Login = () => {
             src={desktopAuth}
             alt="a finance signup image"
             className="hidden lg:block w-[100%] h-[100%] absolute top-0 left-0 z-[-1]"
+            loading="lazy"
           />
           <div className="hidden lg:flex flex-col gap-3 pr-10">
             <h1 className="text-3xl text-white font-bold pr-10">

@@ -14,7 +14,7 @@ const imageStyling = "object-cover w-7 h-7 rounded-full";
 const transactionsData = [
   {
     image: (
-      <img src={Woman} alt="a smiling profile woman" className={imageStyling} />
+      <img src={Woman} alt="a smiling profile woman" className={imageStyling} loading="lazy" />
     ),
     name: "Emma Richardson",
     amount: "+$75.50",
@@ -25,7 +25,7 @@ const transactionsData = [
       <img
         src={Chinese}
         alt="a smiling profile chinese man"
-        className={imageStyling}
+        className={imageStyling} loading="lazy"
       />
     ),
     name: "Savory Bites Bistro",
@@ -34,7 +34,7 @@ const transactionsData = [
   },
   {
     image: (
-      <img src={Man} alt="a smiling profile man" className={imageStyling} />
+      <img src={Man} alt="a smiling profile man" className={imageStyling} loading="lazy" />
     ),
     name: "Daniel Carter",
     amount: "-$42.30",
@@ -45,7 +45,7 @@ const transactionsData = [
       <img
         src={Chinese}
         alt="a smiling profile chinese man"
-        className={imageStyling}
+        className={imageStyling} loading="lazy"
       />
     ),
     name: "Sun park",
@@ -54,7 +54,7 @@ const transactionsData = [
   },
   {
     image: (
-      <img src={Woman} alt="a smiling profile woman" className={imageStyling} />
+      <img src={Woman} alt="a smiling profile woman" className={imageStyling} loading="lazy" />
     ),
     name: "Urban Services Hub",
     amount: "+$65.00",
