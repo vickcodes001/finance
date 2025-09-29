@@ -21,9 +21,9 @@ const Login = () => {
   });
   const [showPassword, setShowPassword] = useState(true);
   const [errors, setErrors] = useState<Partial<FormData>>({});
-  const [loading, setLoading] = useState(false)
-  const { setUser } = useUser()
-  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false);
+  const { setUser } = useUser();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,12 +31,11 @@ const Login = () => {
   };
 
   const handleShowPassword = () => {
-    setShowPassword(!showPassword)
+    setShowPassword(!showPassword);
   };
 
   const validate = () => {
     const newErrors: Partial<FormData> = {};
-
 
     if (!form.email.trim()) {
       newErrors.email = "Email is required";
@@ -48,52 +47,61 @@ const Login = () => {
     }
 
     setErrors(newErrors);
+
+    {/* remove error message */}
+    if (Object.keys(newErrors).length > 0) {
+      setLoading(false)
+      setTimeout(() => {
+        setErrors({})
+      }, 3000);
+    }
+
     return Object.keys(newErrors).length === 0;
   };
 
-  
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    
-    setLoading(true)
+
+    setLoading(true);
     if (!validate()) return;
-    
+
     try {
-      const res = await axios.post("https://finance-poc.onrender.com/api/auth/login", form);
-    console.log("Login success:", res.data);
-    setUser(res.data.user.name)
-    localStorage.setItem("username", res.data.user.name)
-    
-    
-    setForm({ email: "", password: "" });
-    setErrors({});
-    
-    navigate("/");
-  } catch (err) {
-    if (axios.isAxiosError(err)) {
-      const serverError = err as AxiosError<{ message: string }>;
+      const res = await axios.post(
+        "https://finance-poc.onrender.com/api/auth/login",
+        form
+      );
+      console.log("Login success:", res.data);
+      setUser(res.data.user.name);
+      localStorage.setItem("username", res.data.user.name);
 
-      if (serverError.response) {
-        console.error("Login failed:", serverError.response.data.message);
-        setErrors({ password: serverError.response.data.message });
+      setForm({ email: "", password: "" });
+      setErrors({});
+
+      navigate("/");
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const serverError = err as AxiosError<{ message: string }>;
+
+        if (serverError.response) {
+          console.error("Login failed:", serverError.response.data.message);
+          setErrors({ password: serverError.response.data.message });
+        }
+      } else {
+        console.error("Unexpected error:", err);
       }
-    } else {
-      console.error("Unexpected error:", err);
-    }
-    
-    
-    setTimeout(() => setErrors({}), 3000);
-  }
-};
 
+      setTimeout(() => setErrors({}), 3000);
+    }
+  };
 
   return (
     <>
       <div className="flex flex-col gap-30 lg:gap-0 lg:flex-row lg:w-[1224px] mx-auto bg-[#F8F4F0] pt-0 lg:p-5 h-[920px]">
         <div className="flex flex-col justify-between items-center mx-auto lg:items-start bg-[#201F24] w-full max-w-[760px] lg:h-full rounded-b-xl lg:rounded-b-0 lg:rounded-xl overflow-hidden relative z-1 p-10">
           <div>
-            <h2 className="text-3xl font-bold pl-7 text-white lg:block">FinPlan</h2>
+            <h2 className="text-3xl font-bold pl-7 text-white lg:block">
+              FinPlan
+            </h2>
           </div>
           <img
             src={desktopAuth}
@@ -134,26 +142,26 @@ const Login = () => {
               <div className="flex items-center justify-between pr-5 w-full border border-gray-300 rounded">
                 <input
                   className={`w-[85%] border-none outline-none p-2 `}
-                  type={`${showPassword ? "password": "text"}`}
+                  type={`${showPassword ? "password" : "text"}`}
                   name="password"
                   value={form.password}
                   onChange={handleChange}
                 />
-                {showPassword ? 
+                {showPassword ? (
                   <img
                     src={eyeIcon}
                     alt="a eye icon"
                     className="cursor-pointer w-[16px] h-[16px]"
                     onClick={handleShowPassword}
                   />
-                  :
+                ) : (
                   <img
                     src={hidden}
                     alt="a closed eye icon"
                     className="cursor-pointer w-[16px] h-[16px]"
                     onClick={handleShowPassword}
                   />
-                }
+                )}
               </div>
               {errors.password && (
                 <p className="text-red-500 text-sm">{errors.password}</p>
@@ -161,16 +169,19 @@ const Login = () => {
             </div>
             <div className="flex flex-col items-center gap-2">
               <button className="flex justify-center text-[12px] text-white bg-[rgba(32,31,36,1)] cursor-pointer px-4 py-3 rounded w-full text-center">
-               {loading ?
-                <Loader2 className="flex h-4 w-4 animate-spin" />
-              :
-                <p>Login</p>
-               } 
+                {loading ? (
+                  <Loader2 className="flex h-4 w-4 animate-spin" />
+                ) : (
+                  <p>Login</p>
+                )}
               </button>
               <p className="text-gray-500 text-[14px] mt-3">
-                Need to create an account? 
+                Need to create an account?
                 <span>
-                  <Link to="/signup" className="text-gray-900 underline ml-3 font-bold">
+                  <Link
+                    to="/signup"
+                    className="text-gray-900 underline ml-3 font-bold"
+                  >
                     Sign Up
                   </Link>
                 </span>

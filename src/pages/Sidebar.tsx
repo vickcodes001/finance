@@ -1,52 +1,53 @@
-import { Link, useLocation, useNavigate,  } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   PiArrowFatLineLeftFill,
   PiArrowFatLineRightFill,
 } from "react-icons/pi";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { TbLogout2 } from "react-icons/tb";
 import { useUser } from "../context/UserContext";
 
-const iconStyling = "w-full max-w-[50px] lg:w-[14px]"
+const iconStyling = "w-full max-w-[50px] lg:w-[14px]";
 
 const linkStyling =
   "flex gap-4 items-center lg:pl-6 py-1 px-3 lg:px-0 lg:rounded-r-md text-3xl lg:text-[12px] font-bold lg:h-10 hover:bg-white hover:text-gray-900 border-4 border-transparent hover:border-l-[rgba(39,124,120,1)] hover:text-[#0EA5E9] cursor-pointer";
 
-const baseSidebarClasses ="w-full rounded-t-2xl fixed bottom-0 lg:static z-2 lg:rounded-r-2xl lg:rounded-t-none flex flex-col justify-between gap-15 py-5 lg:pr-3 bg-[rgba(32,31,36,1)] text-[#CBD5E1]";
+const baseSidebarClasses =
+  "w-full rounded-t-2xl fixed bottom-0 lg:static z-2 lg:rounded-r-2xl lg:rounded-t-none flex flex-col justify-between gap-15 py-5 lg:pr-3 bg-[rgba(32,31,36,1)] text-[#CBD5E1]";
 const expandedSidebar = "lg:max-w-[200px]";
 const minimizedSidebar = "lg:max-w-[100px] pt-25";
 
 const NavItems = [
   {
     path: "/",
-    icon: <img src="images/home.png" alt="" className={iconStyling}/>,
+    icon: <img src="images/home.png" alt="" className={iconStyling} />,
     name: "Overview",
   },
-  {
-    path: "/transaction",
-    icon: <img src="images/transaction-icon.svg" alt="" className={iconStyling}/>,
-    name: "Transactions",
-  },
+  // {
+  //   path: "/transaction",
+  //   icon: <img src="images/transaction-icon.svg" alt="" className={iconStyling}/>,
+  //   name: "Transactions",
+  // },
   {
     path: "/budget",
-    icon: <img src="images/budget-icon.svg" alt="" className={iconStyling}/>,
+    icon: <img src="images/budget-icon.svg" alt="" className={iconStyling} />,
     name: "Budgets",
   },
   {
     path: "/pots",
-    icon: <img src="images/sidebar-pot-icon.png" alt="" className={iconStyling}/>,
+    icon: (
+      <img src="images/sidebar-pot-icon.png" alt="" className={iconStyling} />
+    ),
     name: "Pots",
   },
 ];
 
-
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(true);
   const location = useLocation();
-  const navigate = useNavigate()
-  const { user, setUser } = useUser()
+  const navigate = useNavigate();
+  const { user, setUser } = useUser();
 
-  
   // event for minimizing the sidebar
   const handleMinimize = () => {
     if (collapsed) {
@@ -58,13 +59,13 @@ const Sidebar = () => {
 
   // event for logging out user
   const handleLogout = () => {
-  ["username", "accountBalance", "budgetsCard", "potsCard"].forEach(key =>
-    localStorage.removeItem(key)
-  );
+    ["username", "accountBalance", "budgetsCard", "potsCard"].forEach((key) =>
+      localStorage.removeItem(key)
+    );
 
-    setUser(' ')
-    navigate("/login", { replace: true })
-  }
+    setUser(" ");
+    navigate("/login", { replace: true });
+  };
 
   useEffect(() => {
     const saved = localStorage.getItem("sidebar-collapsed");
@@ -72,14 +73,18 @@ const Sidebar = () => {
       setCollapsed(saved === "true");
     }
   }, []);
-  
+
   useEffect(() => {
     localStorage.setItem("sidebar-collapsed", collapsed.toString());
   }, [collapsed]);
 
   return (
     <>
-      <div className={`${baseSidebarClasses} ${collapsed ? expandedSidebar : minimizedSidebar}`}>
+      <div
+        className={`${baseSidebarClasses} ${
+          collapsed ? expandedSidebar : minimizedSidebar
+        }`}
+      >
         <div className="flex flex-col gap-10">
           <h2
             className={
@@ -95,35 +100,42 @@ const Sidebar = () => {
                 const restricted = !user && items.path !== "/";
 
                 return (
-                <Link
-                  key={idx}
-                  to={restricted ? "#" : items.path}
-                  onClick={(e) => {
-                    if (restricted) {
-                      e.preventDefault();
-                      navigate("/login", {replace: true})
-                    }
-                  }}
-                  className={`${linkStyling} ${
-                    location.pathname === items.path
-                      ? "lg:pl-6 py-1 gap-2 rounded-t-md lg:rounded-t-none bg-white lg:rounded-r-md text-gray-900 text-3xl lg:border-l-[rgba(39,124,120,1)] lg:text-[14px]"
-                      : ""
-                  }`}
-                >
-                  <p className={`${collapsed ? "" : "text-xl"} w-5 lg:w-4`}>{items.icon}</p>
-                  <p className={`${collapsed ? "lg:block" : "hidden"} hidden`}>{items.name}</p>
-                </Link>
-              )
+                  <Link
+                    key={idx}
+                    to={restricted ? "#" : items.path}
+                    onClick={(e) => {
+                      if (restricted) {
+                        e.preventDefault();
+                        navigate("/login", { replace: true });
+                      }
+                    }}
+                    className={`${linkStyling} ${
+                      location.pathname === items.path
+                        ? "lg:pl-6 py-1 gap-2 rounded-t-md lg:rounded-t-none bg-white lg:rounded-r-md text-gray-900 text-3xl lg:border-l-[rgba(39,124,120,1)] lg:text-[14px]"
+                        : ""
+                    }`}
+                  >
+                    <p className={`${collapsed ? "" : "text-xl"} w-5 lg:w-4`}>
+                      {items.icon}
+                    </p>
+                    <p
+                      className={`${collapsed ? "lg:block" : "hidden"} hidden`}
+                    >
+                      {items.name}
+                    </p>
+                  </Link>
+                );
               })}
             </div>
 
             <div>
-              <div
-                onClick={handleLogout}
-                className={`${linkStyling} !pl-5`}
-              >
-                <TbLogout2  className="text-[20px]" />
-                <p className={`hidden ${collapsed ? "" : "lg:hidden"} lg:block`}>Leave</p>
+              <div onClick={handleLogout} className={`${linkStyling} !pl-5`}>
+                <TbLogout2 className="text-[20px]" />
+                <p
+                  className={`hidden ${collapsed ? "" : "lg:hidden"} lg:block`}
+                >
+                  Leave
+                </p>
               </div>
               <div
                 className={`${linkStyling} hidden lg:flex`}

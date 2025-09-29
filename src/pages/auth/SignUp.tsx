@@ -57,8 +57,8 @@ const SignUp = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true)
     if (validate()) {
+      setIsLoading(true)
       console.log("Valid form submitted:", form);
       setErrors({});
     }
