@@ -1,33 +1,28 @@
 import { Link } from "react-router-dom";
 import type { details } from "./type";
 import Card from "./Cards";
-import { useUser } from "../context/UserContext";
 import { useEffect, useState } from "react";
 
-export type pot = {title: string, amount: number}
+export type pot = { title: string; amount: number };
 
 interface Props {
   detail: details[];
 }
 
-
-
 const PotsCard = ({ detail }: Props) => {
-  const [potsGotten, setPotsGotten] = useState<pot[]>([])
-  const potDetails = detail.filter((d) => d.potTitle && d.potDescription && d.potIcon);
-  const { accountBalance } = useUser()
-  console.log("account balance", accountBalance);
-  
-  const totalAmount = potsGotten.reduce((sum, item) => sum + item.amount, 0);
-  
-  useEffect(() => {
-  const saved = localStorage.getItem("potsCard");
-  if (saved) {
-    setPotsGotten(JSON.parse(saved));
-  }
-}, []);
+  const [potsGotten, setPotsGotten] = useState<pot[]>([]);
+  const potDetails = detail.filter(
+    (d) => d.potTitle && d.potDescription && d.potIcon
+  );
 
-  
+  const totalAmount = potsGotten.reduce((sum, item) => sum + item.amount, 0);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("potsCard");
+    if (saved) {
+      setPotsGotten(JSON.parse(saved));
+    }
+  }, []);
 
   return (
     <>
@@ -44,10 +39,12 @@ const PotsCard = ({ detail }: Props) => {
 
         <div className="flex flex-col lg:flex-row gap-5">
           <div className="flex gap-5 bg-[#F8F4F0] p-5 rounded-md items-center lg:w-1/2">
-            <img src="images/card-pot-icon.svg" alt="" loading="lazy"/>
+            <img src="images/card-pot-icon.svg" alt="" loading="lazy" />
             <div>
               <p className="text-[12px] text-gray-500">Total Saved</p>
-              <p className="text-2xl font-bold">N{Number(totalAmount).toLocaleString()}</p>
+              <p className="text-2xl font-bold">
+                N{Number(totalAmount).toLocaleString()}
+              </p>
             </div>
           </div>
 
@@ -66,7 +63,9 @@ const PotsCard = ({ detail }: Props) => {
                 }`}
               >
                 <p className="text-[10px] text-gray-500">{pot.title}</p>
-                <p className="font-semibold text-[14px]">N{Number(pot.amount).toLocaleString()}</p>
+                <p className="font-semibold text-[14px]">
+                  N{Number(pot.amount).toLocaleString()}
+                </p>
               </div>
             ))}
           </div>
